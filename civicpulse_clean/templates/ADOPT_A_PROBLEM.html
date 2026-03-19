@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Pulse — कार्यालय ज्ञाप · OFFICE MEMORANDUM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cutive+Mono&family=Architects+Daughter&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --govt-paper: #f2e8d5;
+  --govt-ink: #2c3e50;
+  --govt-red: #b22234;
+  --govt-blue: #003366;
+  --govt-green: #2e7d32;
+  --govt-gold: #c5a028;
+  --govt-border: #8b4513;
+  --govt-stamp-red: #8b0000;
+  --govt-stamp-blue: #1e3a5f;
+  --coffee-light: rgba(139, 69, 19, 0.08);
+  --coffee-dark: rgba(139, 69, 19, 0.15);
+}
+
+body {
+  background-color: var(--govt-paper);
+  background-image: 
+    repeating-linear-gradient(45deg, var(--coffee-light) 0px, var(--coffee-light) 2px, transparent 2px, transparent 8px),
+    linear-gradient(135deg, #f2e8d5 0%, #e8d9c0 100%);
+  font-family: 'Cutive Mono', 'Special Elite', monospace;
+  color: var(--govt-ink);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+/* Paper texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.08 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.4"/></svg>');
+  pointer-events: none;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+/* NAVIGATION - GOVERNMENT OFFICE STYLE */
+nav {
+  background: var(--govt-blue);
+  border-bottom: 4px solid var(--govt-gold);
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 4px 0 var(--govt-red);
+  z-index: 10;
+}
+
+nav::after {
+  content: "भारत सरकार · GOVERNMENT OF INDIA";
+  position: absolute;
+  bottom: -10px;
+  right: 3rem;
+  background: var(--govt-paper);
+  color: var(--govt-red);
+  font-size: 0.7rem;
+  padding: 0.2rem 1rem;
+  border: 1px solid var(--govt-border);
+  font-family: 'Special Elite', cursive;
+  letter-spacing: 1px;
+}
+
+.nav-brand {
+  font-family: 'Special Elite', cursive;
+  font-size: 1.8rem;
+  color: var(--govt-gold);
+  letter-spacing: 3px;
+}
+
+.nav-brand em {
+  color: white;
+  font-style: normal;
+  background: var(--govt-red);
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.5rem;
+  border: 1px solid var(--govt-gold);
+}
+
+.back-link {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Special Elite', cursive;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px dashed var(--govt-gold);
+  padding: 0.4rem 1rem;
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: var(--govt-red);
+  color: white;
+  border: 1px solid white;
+}
+
+/* HERO SECTION - OFFICE MEMORANDUM — FIXED VISIBILITY */
+.hero-memo {
+  background: linear-gradient(135deg, var(--govt-blue) 0%, #1a4466 100%);
+  padding: 4rem 3rem;
+  position: relative;
+  border-bottom: 4px solid var(--govt-gold);
+  text-align: center;
+  z-index: 5;
+  width: 100%;
+  clear: both;
+}
+
+.hero-memo::before {
+  content: "⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻";
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  color: var(--govt-gold);
+  opacity: 0.2;
+  font-size: 1.2rem;
+  letter-spacing: 10px;
+}
+
+.hero-memo h1 {
+  font-family: 'Special Elite', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: white;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-shadow: 2px 2px 0 #00000055;
+  line-height: 1.2;
+}
+
+.hero-memo h1 em {
+  color: var(--govt-gold);
+  font-style: normal;
+  border-bottom: 2px dashed var(--govt-red);
+  display: inline-block;
+}
+
+.hero-memo p {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: 'Cutive Mono', monospace;
+  line-height: 1.8;
+}
+
+.memo-ref {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.5rem 2rem;
+  background: var(--govt-paper);
+  color: var(--govt-blue);
+  font-family: 'Special Elite', cursive;
+  border: 2px solid var(--govt-gold);
+  transform: rotate(-1deg);
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.2);
+}
+
+/* OFFICE ORDER STRIP */
+.office-order-strip {
+  background: var(--govt-paper);
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 2px dotted var(--govt-border);
+  position: relative;
+}
+
+.office-order-strip::before {
+  content: "✧ OFFICE ORDER № 2025/CP/ADOPT ✧";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--govt-red);
+  color: white;
+  padding: 0.2rem 2rem;
+  font-size: 0.7rem;
+  font-family: 'Special Elite', cursive;
+  white-space: nowrap;
+  border: 1px solid var(--govt-gold);
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid var(--govt-border);
+  box-shadow: 3px 3px 0 var(--coffee-dark);
+}
+
+.order-number {
+  font-family: 'Special Elite', cursive;
+  font-size: 1.2rem;
+  color: var(--govt-red);
+  font-weight: bold;
+}
+
+.order-arrow {
+  font-size: 1.5rem;
+  color: var(--govt-gold);
+  opacity: 0.7;
+}
+
+/* FILE CABINET FILTERS */
+.file-cabinet {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem 3rem 0;
+  border-bottom: 2px solid var(--govt-border);
+  background: linear-gradient(to bottom, var(--govt-paper), #dacbb0);
+}
+
+.file-divider {
+  background: var(--govt-paper);
+  border: 1px solid var(--govt-border);
+  border-bottom: none;
+  padding: 0.8rem 2rem;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.9rem;
+  color: var(--govt-ink);
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 120px;
+}
+
+.file-divider.active {
+  background: var(--govt-blue);
+  color: white;
+  border-color: var(--govt-gold);
+  border-bottom: 2px solid var(--govt-blue);
+  top: 0;
+  padding-bottom: 1rem;
+}
+
+.file-divider .stamp-small {
+  font-size: 0.6rem;
+  color: var(--govt-red);
+  background: rgba(255,255,255,0.9);
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+  transform: rotate(-2deg);
+}
+
+.file-divider.active .stamp-small {
+  color: white;
+  background: var(--govt-red);
+}
+
+/* GRIEVANCE FILES GRID */
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 2.5rem;
+  padding: 3rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* MAIN GRIEVANCE FILE CARD */
+.grievance-file {
+  background: var(--govt-paper);
+  border: 1px solid var(--govt-border);
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.1), 0 0 0 1px var(--govt-gold) inset;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.grievance-file:hover {
+  transform: translateY(-5px);
+  box-shadow: 12px 12px 0 rgba(0,0,0,0.15), 0 0 0 2px var(--govt-gold) inset;
+}
+
+/* Paper clip decoration */
+.paper-clip {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 25px;
+  height: 35px;
+  border: 3px solid var(--govt-gold);
+  border-radius: 50% 50% 0 0;
+  transform: rotate(15deg);
+  opacity: 0.8;
+  z-index: 5;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.paper-clip::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: -2px;
+  width: 25px;
+  height: 3px;
+  background: var(--govt-gold);
+  transform: rotate(25deg);
+  border-radius: 2px;
+}
+
+/* File Header */
+.file-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px dashed var(--govt-border);
+  position: relative;
+}
+
+.ashoka-emblem {
+  font-size: 1.8rem;
+  filter: drop-shadow(2px 2px 0 var(--govt-gold));
+}
+
+.govt-title {
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  color: var(--govt-blue);
+  letter-spacing: 1px;
+  flex: 1;
+}
+
+.dept-code {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--govt-red);
+  background: rgba(139, 0, 0, 0.1);
+  padding: 0.2rem 0.5rem;
+  border: 1px dotted var(--govt-red);
+}
+
+/* File Grid Layout */
+.file-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Evidence Photos */
+.evidence-photo {
+  position: relative;
+  border: 5px solid white;
+  box-shadow: 4px 4px 0 var(--coffee-dark);
+  background: white;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.evidence-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.3) contrast(0.95) brightness(0.95);
+  transition: transform 0.5s;
+}
+
+.grievance-file:hover .evidence-photo img {
+  transform: scale(1.05);
+}
+
+.photo-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  font-family: 'Special Elite', cursive;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.stamp {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--govt-stamp-red);
+  border: 3px double var(--govt-stamp-red);
+  padding: 0.2rem 1rem;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transform: rotate(10deg);
+  opacity: 0.7;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(2px);
+}
+
+.stamp.evidence {
+  color: var(--govt-stamp-blue);
+  border-color: var(--govt-stamp-blue);
+  transform: rotate(-5deg);
+}
+
+.stamp.proposed {
+  color: var(--govt-green);
+  border-color: var(--govt-green);
+  transform: rotate(15deg);
+}
+
+/* Grievance Details */
+.grievance-details {
+  grid-column: span 2;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background: rgba(255,255,255,0.5);
+  border-left: 3px solid var(--govt-red);
+}
+
+.typewriter-line {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-family: 'Cutive Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.field {
+  color: var(--govt-blue);
+  font-weight: bold;
+  min-width: 110px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subject {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--govt-red);
+  margin: 0.5rem 0;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--govt-gold);
+}
+
+.grievance-text {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--govt-ink);
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255,255,255,0.7);
+  border: 1px dotted var(--govt-border);
+}
+
+/* Rubber Stamp Row */
+.stamp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+  border-top: 1px dashed var(--govt-border);
+  border-bottom: 1px dashed var(--govt-border);
+}
+
+.rubber-stamp {
+  font-family: 'Special Elite', cursive;
+  font-size: 1rem;
+  padding: 0.3rem 1.5rem;
+  border: 3px double;
+  transform: rotate(-2deg);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.rubber-stamp.open {
+  color: var(--govt-red);
+  border-color: var(--govt-red);
+  background: rgba(178, 34, 52, 0.05);
+}
+
+.rubber-stamp.funded {
+  color: var(--govt-blue);
+  border-color: var(--govt-blue);
+  background: rgba(0, 51, 102, 0.05);
+}
+
+.rubber-stamp.done {
+  color: var(--govt-green);
+  border-color: var(--govt-green);
+  background: rgba(46, 125, 50, 0.05);
+}
+
+.rubber-stamp:hover {
+  transform: rotate(-1deg) scale(1.05);
+  opacity: 1;
+}
+
+.handwritten-date {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 0.8rem;
+  color: var(--govt-border);
+  opacity: 0.8;
+}
+
+/* Carbon Copy Budget Section */
+.carbon-copy {
+  background: rgba(0,0,0,0.02);
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid var(--govt-border);
+  position: relative;
+}
+
+.carbon-copy::before {
+  content: "CARBON COPY · प्रतिलिपि";
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  background: var(--govt-paper);
+  padding: 0 0.5rem;
+  font-size: 0.6rem;
+  color: var(--govt-border);
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cutive Mono', monospace;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.raised-amount {
+  color: var(--govt-green);
+  font-weight: bold;
+}
+
+.total-amount {
+  color: var(--govt-border);
+}
+
+.file-progress {
+  height: 8px;
+  background: rgba(0,0,0,0.1);
+  position: relative;
+  overflow: visible;
+}
+
+.progress-tear {
+  height: 100%;
+  background: linear-gradient(90deg, var(--govt-blue), var(--govt-red));
+  position: relative;
+  width: 0%;
+  transition: width 0.5s;
+}
+
+.progress-tear::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: -3px;
+  bottom: -3px;
+  width: 10px;
+  background: inherit;
+  filter: blur(2px);
+  clip-path: polygon(0 0, 100% 30%, 100% 70%, 0 100%);
+}
+
+/* Adopter Note */
+.adopter-note {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 0.8rem;
+  color: var(--govt-green);
+  padding: 0.5rem;
+  background: rgba(46, 125, 50, 0.1);
+  border-left: 3px solid var(--govt-green);
+  margin: 0.5rem 0;
+}
+
+/* File Footer */
+.file-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--govt-border);
+}
+
+.office-order {
+  background: var(--govt-red);
+  border: 2px solid var(--govt-gold);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-family: 'Special Elite', cursive;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  box-shadow: 4px 4px 0 var(--coffee-dark);
+}
+
+.office-order:hover {
+  background: #9a1c1c;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--coffee-dark);
+}
+
+.office-order.adopted {
+  background: var(--govt-green);
+}
+
+.office-order.done {
+  background: #555;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.signature-line {
+  font-size: 0.5rem;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+/* Coffee Stain Effect */
+.coffee-stain {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 30px;
+  background: var(--coffee-dark);
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* STATS SECTION */
+.stats-section {
+  background: linear-gradient(135deg, var(--govt-blue) 0%, #1a4466 100%);
+  padding: 3rem;
+  border-top: 4px solid var(--govt-gold);
+  border-bottom: 4px solid var(--govt-gold);
+  position: relative;
+}
+
+.stats-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.stat-file {
+  background: var(--govt-paper);
+  padding: 2rem 1rem;
+  border: 1px solid var(--govt-border);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+  text-align: center;
+  transform: rotate(-0.5deg);
+  position: relative;
+}
+
+.stat-file::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px dashed var(--govt-gold);
+  pointer-events: none;
+}
+
+.stat-number {
+  font-family: 'Special Elite', cursive;
+  font-size: 2.5rem;
+  color: var(--govt-red);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--govt-blue);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--govt-blue);
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  border-top: 4px solid var(--govt-gold);
+  font-family: 'Cutive Mono', monospace;
+  font-size: 0.8rem;
+}
+
+footer a {
+  color: var(--govt-gold);
+  text-decoration: none;
+  border: 1px dashed var(--govt-gold);
+  padding: 0.5rem 1rem;
+  transition: all 0.3s;
+}
+
+footer a:hover {
+  background: var(--govt-red);
+  color: white;
+  border-color: white;
+}
+
+/* OVERLAYS - KEEPING FUNCTIONALITY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 51, 102, 0.9);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay.open { display: flex; }
+
+.sheet {
+  background: var(--govt-paper);
+  border: 4px solid var(--govt-gold);
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 10px 10px 0 rgba(0,0,0,0.3);
+  position: relative;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal.up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem; }
+  .problems-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .office-order-strip { flex-direction: column; align-items: center; }
+  .file-cabinet { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">Civic<em>Pulse</em></div>
+  <a href="/" class="back-link">← HOME</a>
+</nav>
+
+<section class="hero-memo reveal">
+  <h1>GRIEVANCE <em>ADOPTION</em> FILE</h1>
+  <p>When the government machinery moves slowly, citizens take charge. Adopt a civic problem, contribute the budget, and own the resolution. Your name shall be recorded in the permanent plaque register.</p>
+  <div class="memo-ref">MEMO №: CP/ADOPT/2025-26 · ISSUED TODAY</div>
+</section>
+
+<div class="office-order-strip">
+  <div class="order-item"><span class="order-number">01</span> FILE IDENTIFIED</div>
+  <span class="order-arrow">→</span>
+  <div class="order-item"><span class="order-number">02</span> BUDGET CONTRIBUTED</div>
+  <span class="order-arrow">→</span>
+  <div class="order-item"><span class="order-number">03</span> WORK ORDER ISSUED</div>
+  <span class="order-arrow">→</span>
+  <div class="order-item"><span class="order-number">04</span> FILE CLOSED · PLAQUE AWARDED</div>
+</div>
+
+<div class="file-cabinet">
+  <button class="file-divider active" onclick="filterProblems('all', this)">ALL FILES <span class="stamp-small">📁 COMPLETE</span></button>
+  <button class="file-divider" onclick="filterProblems('open', this)">PENDING <span class="stamp-small">URGENT</span></button>
+  <button class="file-divider" onclick="filterProblems('funded', this)">PROCESSING</button>
+  <button class="file-divider" onclick="filterProblems('done', this)">RESOLVED <span class="stamp-small">✓ DONE</span></button>
+</div>
+
+<div class="problems-grid" id="problemsGrid"></div>
+
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-file reveal"><div class="stat-number">₹12.4L</div><div class="stat-label">TOTAL FUNDS CONTRIBUTED</div></div>
+    <div class="stat-file reveal d1"><div class="stat-number">47</div><div class="stat-label">FILES ADOPTED</div></div>
+    <div class="stat-file reveal d2"><div class="stat-number">23</div><div class="stat-label">PENDING GRIEVANCES</div></div>
+    <div class="stat-file reveal d3"><div class="stat-number">24</div><div class="stat-label">RESOLVED</div></div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 · भारत सरकार · GOVERNMENT OF INDIA · CIVIC PULSE</p>
+  <a href="index.html">← RETURN TO HOME</a>
+</footer>
+
+<!-- ADOPT OVERLAY (same functionality) -->
+<div class="overlay" id="adoptOv" onclick="if(event.target===this)closeOv('adoptOv')">
+  <div class="sheet">
+    <h2 style="font-family:'Special Elite';color:var(--govt-red)">OFFICE ORDER · ADOPTION FORM</h2>
+    <div id="adoptForm"></div>
+    <button class="office-order" style="width:100%;margin-top:1rem" onclick="doAdopt()">CONTRIBUTE BUDGET</button>
+    <button class="back-link" style="margin-top:1rem;background:transparent" onclick="closeOv('adoptOv')">CANCEL</button>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="overlay" id="successOv" onclick="if(event.target===this)closeOv('successOv')">
+  <div class="sheet" style="text-align:center">
+    <div style="font-size:3rem;color:var(--govt-green)">✓</div>
+    <h3 style="font-family:'Special Elite'">BUDGET CONTRIBUTED</h3>
+    <p id="plaqueName"></p>
+    <p style="margin:1rem 0">Your name has been entered in the permanent plaque register.</p>
+    <button class="office-order" onclick="closeOv('successOv')">FILE CLOSED</button>
+  </div>
+</div>
+
+<script>
+// PROBLEMS DATA — UPDATED ONLY BEFORE IMAGE FOR P004 (OPEN DRAIN COVER)
+const problems = [
+  {
+    id: 'P001',
+    title: 'Pothole Cluster — Linking Road',
+    city: 'Mumbai · Bandra West',
+    dept: 'Roads & Highways Dept',
+    desc: '7 large potholes causing vehicle damage and accidents. Government deadline missed twice. Area sees 2000+ vehicles daily.',
+    beforeImg: 'https://i.pinimg.com/736x/d0/3f/c2/d03fc2fe363172d449e218a84b557508.jpg',
+    afterImg: 'https://i.pinimg.com/736x/06/b6/1c/06b61ccb5a6691281cde0dbc997f07c7.jpg',
+    goal: 45000,
+    raised: 38000,
+    status: 'open'
+  },
+  {
+    id: 'P002',
+    title: 'Broken Streetlights — Shivaji Park',
+    city: 'Mumbai · Dadar',
+    dept: 'Municipal Electrical Dept',
+    desc: '4 streetlights out since January. Women commuters report feeling unsafe. Two police complaints filed with no action.',
+    beforeImg: 'https://i.pinimg.com/736x/97/bc/0b/97bc0b9b5315ea0f427cdd68cedf0b3f.jpg',
+    afterImg: 'https://i.pinimg.com/736x/85/ed/a4/85eda40f0a8b7c78ffeab7346b09bf1a.jpg',
+    goal: 28000,
+    raised: 28000,
+    status: 'funded'
+  },
+  {
+    id: 'P003',
+    title: 'Park Benches & Pathway',
+    city: 'Amravati · Rajapeth',
+    dept: 'Garden Dept / AMC',
+    desc: 'Community park benches rotted and broken. Elderly residents cannot sit. Pathway cracked and dangerous.',
+    beforeImg: 'https://i.pinimg.com/736x/b1/80/5b/b1805b77746883423e698aa77085511b.jpg',
+    afterImg: 'https://i.pinimg.com/736x/b6/26/0f/b6260fd240559e5b608ac7ef147659d1.jpg',
+    goal: 35000,
+    raised: 35000,
+    status: 'done',
+    adopter: 'Lions Club Amravati'
+  },
+  {
+    id: 'P004',
+    title: 'Open Drain Cover — Camp Road',
+    city: 'Amravati · Camp Area',
+    dept: 'Storm Water Drain Dept',
+    desc: 'Three drain covers missing for 6 months. One child fell in. AMC response: pending.',
+    // BEFORE image updated to the new one; AFTER remains original (using previous after image)
+    beforeImg: 'https://i.pinimg.com/1200x/24/7c/2d/247c2d333717afd3373d0d673517d825.jpg',
+    afterImg: 'https://i.pinimg.com/1200x/cd/e9/07/cde907a586013948fc1bee4367239bfe.jpg', // original after kept
+    goal: 12000,
+    raised: 5500,
+    status: 'open'
+  },
+  {
+    id: 'P005',
+    title: 'Tree Plantation — Sector 8 Divider',
+    city: 'Pune · Wakad',
+    dept: 'Garden & Parks Dept',
+    desc: 'Road divider stripped of trees 2 years ago. Citizens have requested replantation through 3 official complaints.',
+    beforeImg: 'https://i.pinimg.com/1200x/a9/5b/f2/a95bf27803cfc6bee43f4aaa63eb8ce3.jpg',
+    afterImg: 'https://i.pinimg.com/1200x/7b/fa/53/7bfa53c522ab983d8f3c889f7112fed0.jpg',
+    goal: 22000,
+    raised: 22000,
+    status: 'done',
+    adopter: 'Priya Sharma & Neighbours'
+  },
+  {
+    id: 'P006',
+    title: 'Public Toilet Repair — Ferry Wharf',
+    city: 'Mumbai · Mazagaon',
+    dept: 'Public Health Dept',
+    desc: 'Only public toilet in 500m radius. Out of service for 3 months. Elderly and differently-abled citizens affected.',
+    beforeImg: 'https://i.pinimg.com/736x/eb/62/68/eb62686dcd4b06a6d808cf749956dd7c.jpg',
+    afterImg: 'https://i.pinimg.com/1200x/68/42/f5/6842f5e8a7c4ff5ddaa7d106bede2268.jpg',
+    goal: 55000,
+    raised: 15000,
+    status: 'open'
+  }
+];
+
+let adoptingId = null;
+
+function renderProblems(data) {
+  const grid = document.getElementById('problemsGrid');
+  grid.innerHTML = '';
+  
+  data.forEach(p => {
+    const pct = Math.min(100, Math.round(p.raised / p.goal * 100));
+    const statusMap = {
+      open: { text: 'PENDING · URGENT', class: 'open' },
+      funded: { text: 'PROCESSING · FUNDED', class: 'funded' },
+      done: { text: 'RESOLVED · COMPLETED', class: 'done' }
+    };
+    const btnLabel = p.status === 'open' ? 'CONTRIBUTE BUDGET' : p.status === 'funded' ? 'ADD TO FUND' : 'FILE CLOSED';
+    const btnClass = p.status === 'done' ? 'done' : p.status === 'funded' ? 'adopted' : '';
+
+    grid.innerHTML += `
+      <div class="grievance-file reveal">
+        <div class="paper-clip"></div>
+        
+        <div class="file-header">
+          <span class="ashoka-emblem">🛡️</span>
+          <span class="govt-title">भारत सरकार · GOVERNMENT OF INDIA</span>
+          <span class="dept-code">${p.dept}</span>
+        </div>
+
+        <div class="file-grid">
+          <div class="evidence-photo">
+            <img src="${p.beforeImg}" alt="Before">
+            <div class="photo-label">BEFORE · पूर्व स्थिति</div>
+            <div class="stamp evidence">EVIDENCE</div>
+          </div>
+          <div class="evidence-photo">
+            <img src="${p.afterImg}" alt="After">
+            <div class="photo-label">AFTER · प्रस्तावित</div>
+            <div class="stamp proposed">PROPOSED</div>
+          </div>
+          
+          <div class="grievance-details">
+            <div class="typewriter-line">
+              <span class="field">GRIEVANCE №:</span>
+              <span class="value">${p.id}/2025/GOV</span>
+            </div>
+            <h3 class="subject">${p.title}</h3>
+            <div class="typewriter-line">
+              <span class="field">JURISDICTION:</span>
+              <span class="value">${p.city}</span>
+            </div>
+            <div class="grievance-text">
+              ${p.desc}
+            </div>
+          </div>
+        </div>
+
+        <div class="stamp-row">
+          <div class="rubber-stamp ${statusMap[p.status].class}">${statusMap[p.status].text}</div>
+          <div class="handwritten-date">Filed: 15/01/2025</div>
+        </div>
+
+        ${p.status === 'done' && p.adopter ? `
+          <div class="adopter-note">
+            ✍️ Adopted by ${p.adopter} — funds received and verified.
+          </div>
+        ` : ''}
+
+        <div class="carbon-copy">
+          <div class="budget-row">
+            <span>BUDGET CONTRIBUTED (₹):</span>
+            <span><span class="raised-amount">${p.raised.toLocaleString('en-IN')}</span><span class="total-amount"> / ${p.goal.toLocaleString('en-IN')}</span></span>
+          </div>
+          <div class="file-progress">
+            <div class="progress-tear" style="width:${pct}%"></div>
+          </div>
+        </div>
+
+        <div class="file-footer">
+          <button class="office-order ${btnClass}" ${p.status === 'done' ? 'disabled' : ''} onclick="openAdopt('${p.id}')">
+            <span>${btnLabel}</span>
+            <span class="signature-line">(SIGN HERE)</span>
+          </button>
+        </div>
+
+        <div class="coffee-stain"></div>
+      </div>
+    `;
+  });
+
+  // Trigger reveal animations
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('up'));
+  }, 100);
+}
+
+function filterProblems(filter, btn) {
+  document.querySelectorAll('.file-divider').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  
+  const filtered = filter === 'all' ? problems : problems.filter(p => p.status === filter);
+  renderProblems(filtered);
+  
+  document.querySelector('.problems-grid').scrollIntoView({ behavior: 'smooth' });
+}
+
+function openAdopt(id) {
+  const p = problems.find(x => x.id === id);
+  if (!p || p.status === 'done') return;
+  
+  adoptingId = id;
+  document.getElementById('adoptForm').innerHTML = `
+    <div style="margin:1rem 0;padding:1rem;background:rgba(0,0,0,0.05)">
+      <strong>${p.title}</strong><br>
+      <span style="font-size:0.8rem">${p.city} · ${p.dept}</span>
+    </div>
+    <div style="margin:1rem 0">
+      <label style="display:block;font-family:'Special Elite'">NAME OF ADOPTER</label>
+      <input type="text" id="adoptName" placeholder="Shri / Smt ..." style="width:100%;padding:0.5rem;background:white;border:2px solid var(--govt-border);font-family:'Cutive Mono'">
+    </div>
+    <div style="margin:1rem 0">
+      <label style="display:block;font-family:'Special Elite'">PLEDGE AMOUNT (₹)</label>
+      <input type="number" id="adoptAmount" min="100" style="width:100%;padding:0.5rem;background:white;border:2px solid var(--govt-border);font-family:'Cutive Mono'">
+      <p style="font-size:0.7rem;margin-top:0.3rem">Goal: ₹${p.goal.toLocaleString()} · Raised: ₹${p.raised.toLocaleString()}</p>
+    </div>
+  `;
+  document.getElementById('adoptOv').classList.add('open');
+}
+
+function closeOv(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function doAdopt() {
+  const name = document.getElementById('adoptName')?.value;
+  const amount = parseInt(document.getElementById('adoptAmount')?.value) || 0;
+  
+  if (!name || amount < 100) {
+    alert('Please enter valid name and amount (min ₹100)');
+    return;
+  }
+  
+  const p = problems.find(x => x.id === adoptingId);
+  if (p) {
+    p.raised = Math.min(p.goal, p.raised + amount);
+    if (p.raised >= p.goal) {
+      p.status = 'funded';
+      p.adopter = name;
+    }
+  }
+  
+  closeOv('adoptOv');
+  document.getElementById('plaqueName').innerHTML = `"${name}"<br><span style="font-size:0.7rem">entered in permanent register</span>`;
+  document.getElementById('successOv').classList.add('open');
+  renderProblems(problems);
+}
+
+// GSAP Animations
+window.addEventListener('load', () => {
+  if (typeof gsap === 'undefined') return;
+  
+  gsap.from('.hero-memo', { y: 20, duration: 0.8, ease: 'power3.out' });
+  gsap.from('.order-item', { 
+    scrollTrigger: '.office-order-strip',
+    x: -20, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'back.out'
+  });
+  gsap.from('.stat-file', {
+    scrollTrigger: '.stats-section',
+    scale: 0.9, opacity: 0, duration: 0.8, stagger: 0.15
+  });
+});
+
+// Initial render
+renderProblems(problems);
+</script>
+<script src="/static/js/api.js"></script>
+</body>
+</html>
