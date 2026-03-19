@@ -34,26 +34,38 @@ Follow these steps to set up the development environment locally.
 ### 1. Backend Setup
 
 Navigate to the backend directory:
+```bash
 cd backend
+```
 
 Create and activate a virtual environment:
+```bash
 python -m venv venv
 venv\Scripts\activate   # On Windows
 # source venv/bin/activate # On macOS/Linux
+```
 
 Install the required Python dependencies:
+```bash
 pip install -r requirements.txt
+```
 
 Apply database migrations:
+```bash
 python manage.py migrate
+```
 
 ### 2. Frontend Setup
 
 Open a new terminal window and navigate to the frontend directory:
+```bash
 cd frontend
+```
 
 Install the required Node.js dependencies:
+```bash
 npm install
+```
 
 ## Running the Application
 
@@ -62,13 +74,17 @@ To run the application locally, you will need to start both the backend and fron
 ### Start the Backend Server
 
 From the backend directory, with your virtual environment activated, run:
+```bash
 python manage.py runserver
+```
 
 The backend API will be available at http://127.0.0.1:8000/
 
 ### Start the Frontend Server
 
 From the frontend directory, run:
+```bash
 npm start
+```
 
 The React application will launch in your default web browser at http://localhost:3000/
