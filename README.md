@@ -55,7 +55,17 @@ Apply database migrations:
 python manage.py migrate
 ```
 
-### 2. Frontend Setup
+### 2. Create a Superuser (Optional)
+
+To access the Django admin panel or test various roles, you can create a superuser account. From the backend directory with your virtual environment activated, run:
+```bash
+python manage.py createsuperuser
+```
+Follow the prompts to set your username, email, and password.
+
+Once your backend server is running, you can access the admin panel in your browser by navigating to **(http://127.0.0.1:8000/admin)** and logging in with the credentials you entered while creating a superuser.
+
+### 3. Frontend Setup
 
 Open a new terminal window and navigate to the frontend directory:
 ```bash
