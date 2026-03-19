@@ -1,0 +1,4048 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Civic Pulse — Reclaim Your City</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+  <style>
+    :root {
+      /* ── PROFESSIONAL PALETTE: White + Deep Blue + Urban Grey ── */
+      --navy: #0B3D91;
+      /* Deep Navy — header/footer */
+      --sky: #1565C0;
+      /* Civic Blue — accent/buttons */
+      --sage: #1976D2;
+      /* Mid blue */
+      --sand: #E3F0FF;
+      /* Light blue tint */
+      --white: #FFFFFF;
+      /* Primary background */
+      --ink: #1a2530;
+      /* Text on light */
+      --bg-secondary: #F4F6F8;
+      /* Light Grey secondary bg */
+      --text-primary: #1A237E;
+      --text-muted: #546E7A;
+      /* STATUS COLOURS */
+      --er: #C62828;
+      /* Warning/Issue — Muted Red */
+      --eo: #E53935;
+      --eg: #2E7D32;
+      /* Success/Resolved — Urban Green */
+      /* OPACITY TOKENS */
+      --sky-dim: rgba(21, 101, 192, 0.12);
+      --sky-mid: rgba(21, 101, 192, 0.3);
+      --er-dim: rgba(198, 40, 40, 0.10);
+      --er-mid: rgba(198, 40, 40, 0.24);
+      --eg-dim: rgba(46, 125, 50, 0.10);
+      --eg-mid: rgba(46, 125, 50, 0.22);
+      --sand-dim: rgba(227, 240, 255, 0.12);
+      /* Extended palette */
+      --police-blue: #1565C0;
+      --marigold: #1565C0;
+      --buff: #E3F0FF;
+      --pearl: #BBDEFB;
+      --citrine: #0D47A1;
+      /* Ember colors from index */
+      --ember-red: #e85d26;
+      --ember-orange: #f4a261;
+      --ember-green: #52b788;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FFFFFF;
+      color: #1a2530;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button {
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      border: none;
+      background: none
+    }
+
+    ul {
+      list-style: none
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 800;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      background: #0B3D91;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem
+    }
+
+    .logo-svg {
+      width: 34px;
+      height: 34px
+    }
+
+    .nav-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+      color: #FFFFFF
+    }
+
+    .nav-brand em {
+      color: #E3F0FF;
+      font-style: normal
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color .25s
+    }
+
+    .nav-links a:hover {
+      color: #FFFFFF
+    }
+
+    .nav-auth {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem
+    }
+
+    .btn-ghost-nav {
+      padding: .42rem 1rem;
+      font-size: .76rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all .25s
+    }
+
+    .btn-ghost-nav:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF
+    }
+
+    .btn-fill-nav {
+      padding: .42rem 1.1rem;
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: #FFFFFF;
+      color: #0B3D91;
+      transition: all .25s
+    }
+
+    .btn-fill-nav:hover {
+      background: #E3F0FF
+    }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    .hero {
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      overflow: hidden;
+      padding-top: 64px;
+      text-align: left;
+    }
+
+    .hero-illo {
+      position: absolute;
+      inset: 0;
+      z-index: 1
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    /* Hero inner row */
+    .hero-row {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem 0 5rem;
+      gap: 2rem;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      max-width: 520px;
+      flex-shrink: 0;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #E3F0FF;
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp .7s .1s forwards;
+    }
+
+    .eyebrow-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2E7D32;
+      animation: breathe 2.5s ease-in-out infinite
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1
+      }
+
+      50% {
+        transform: scale(.5);
+        opacity: .4
+      }
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5.2vw, 5.8rem);
+      font-weight: 900;
+      line-height: 1.02;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp .7s .2s forwards;
+      color: #FFFFFF;
+      text-align: left;
+    }
+
+    .hero-title .ital {
+      font-style: italic;
+      font-weight: 400;
+      color: #E3F0FF
+    }
+
+    .hero-title .sand {
+      color: #E3F0FF
+    }
+
+    /* Multilingual typewriter — VISIBLE, right below title */
+    .tw-wrap {
+      height: 1.9rem;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp .7s .35s forwards;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .tw-text {
+      font-size: .95rem;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .7)
+    }
+
+    .tw-cur {
+      display: inline-block;
+      width: 1.5px;
+      height: .95em;
+      background: #E3F0FF;
+      vertical-align: middle;
+      margin-left: 1px;
+      animation: blink .8s step-end infinite
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0
+      }
+    }
+
+    .hero-sub {
+      display: none
+    }
+
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1.2rem;
+      opacity: 0;
+      animation: fadeUp .7s .55s forwards
+    }
+
+    /* ── STATS BAR below hero btns ── */
+    .hero-stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeUp .7s .75s forwards;
+    }
+
+    .hstat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: .9rem 1.5rem;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-right: none;
+      backdrop-filter: blur(10px);
+      min-width: 130px;
+    }
+
+    .hstat:last-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.13)
+    }
+
+    .hstat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+
+    .hstat-label {
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .45);
+      margin-top: .2rem
+    }
+
+    .hstat-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #52b788;
+      margin-bottom: .4rem;
+      animation: breathe 2s ease-in-out infinite
+    }
+
+    /* ── JOIN HERO CARD ── */
+    .join-hero-card {
+      flex-shrink: 0;
+      width: 460px;
+      background: #FFFFFF;
+      border-radius: 20px;
+      overflow: hidden;
+      animation: fadeUp .7s .9s forwards;
+      opacity: 0;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 255, 255, .08);
+    }
+
+    .join-hero-card .fld input,
+    .join-hero-card .fld select {
+      background: #F4F6F8;
+      border: 1.5px solid rgba(21, 101, 192, .15);
+      color: #1A237E;
+      border-radius: 8px;
+      padding: .6rem .9rem;
+      font-size: .83rem;
+    }
+
+    .join-hero-card .fld input:focus {
+      border-color: #1565C0;
+      background: #fff
+    }
+
+    .join-hero-card .fld label {
+      color: #546E7A
+    }
+
+    .join-hero-card .btn-full-sky {
+      border-radius: 8px;
+      padding: .75rem;
+      font-size: .85rem;
+    }
+
+    .join-hero-card .divider-or {
+      margin: .6rem 0
+    }
+
+    .join-hero-card .btn-full-outline {
+      border-radius: 8px;
+      padding: .7rem
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .9rem 2rem;
+      background: #1565C0;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: .88rem;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .3s;
+      box-shadow: 0 6px 28px rgba(21, 101, 192, .45);
+    }
+
+    .btn-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #0B3D91;
+      transform: translateX(-105%);
+      transition: transform .4s cubic-bezier(.16, 1, .3, 1)
+    }
+
+    .btn-cta:hover::after {
+      transform: translateX(0)
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(21, 101, 192, .45)
+    }
+
+    .btn-cta span,
+    .btn-cta svg {
+      position: relative;
+      z-index: 1
+    }
+
+    .btn-text-link {
+      font-size: .85rem;
+      color: rgba(255, 255, 255, .6);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      transition: color .25s
+    }
+
+    .btn-text-link:hover {
+      color: #FFFFFF
+    }
+
+    /* hero stats strip — REMOVED */
+
+    /* ── I DOT GLOW ── */
+    #hero-i-dot {
+      position: relative;
+      display: inline-block;
+      color: #fff;
+      text-shadow:
+        0 0 8px rgba(244, 162, 97, 0.9),
+        0 0 20px rgba(244, 162, 97, 0.6),
+        0 0 40px rgba(244, 162, 97, 0.3);
+      animation: idot-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes idot-pulse {
+
+      0%,
+      100% {
+        text-shadow: 0 0 8px rgba(244, 162, 97, .9), 0 0 20px rgba(244, 162, 97, .6), 0 0 40px rgba(244, 162, 97, .3);
+      }
+
+      50% {
+        text-shadow: 0 0 14px rgba(244, 162, 97, 1), 0 0 35px rgba(244, 162, 97, .8), 0 0 70px rgba(244, 162, 97, .5);
+      }
+    }
+
+    /* ── ROLE POPUP OVERLAY ── */
+    .role-popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 950;
+      background: rgba(11, 61, 145, .7);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .role-popup-overlay.open {
+      display: flex;
+    }
+
+    .role-popup {
+      background: #fff;
+      border-radius: 20px;
+      width: 520px;
+      max-width: 95vw;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, .35);
+      animation: popUp .35s cubic-bezier(.16, 1, .3, 1) forwards;
+    }
+
+    @keyframes popUp {
+      from {
+        transform: scale(.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .role-popup-head {
+      background: linear-gradient(135deg, #0B3D91, #1565C0);
+      padding: 1.6rem 2rem 1.4rem;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .role-popup-head h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .role-popup-head p {
+      font-size: .78rem;
+      color: rgba(255, 255, 255, .65);
+      margin-top: .2rem;
+    }
+
+    .role-popup-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .2s;
+    }
+
+    .role-popup-close:hover {
+      background: rgba(255, 255, 255, .28);
+    }
+
+    .role-popup-body {
+      padding: 1.8rem 2rem 2rem;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* ── PHASE 1 — AI RESULT CARD (DETECTIVE BOARD from index.html) ── */
+    .phase1-section {
+      padding: 7rem 3rem;
+      background: #F4F6F8;
+      color: #0B3D91;
+      position: relative;
+      overflow: hidden
+    }
+
+    .phase1-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(21, 101, 192, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .sec-tag {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #1565C0;
+      margin-bottom: .8rem;
+      display: block
+    }
+
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.12;
+      margin-bottom: .6rem
+    }
+
+    .sec-title em {
+      font-style: italic;
+      color: #1565C0
+    }
+
+    .sec-sub {
+      font-size: .95rem;
+      line-height: 1.75;
+      color: #546E7A;
+      max-width: 560px;
+      margin-bottom: 4rem;
+      font-weight: 300
+    }
+
+    /* DETECTIVE BOARD from index.html */
+    .detective-board {
+      background: #1a2535;
+      border: 1px solid rgba(109, 143, 163, 0.12);
+      padding: 2.5rem;
+      position: relative;
+      transform: rotate(0deg);
+      border-radius: 4px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .2);
+    }
+
+    .detective-board::before {
+      content: 'CASE FILE';
+      position: absolute;
+      top: -12px;
+      left: 2rem;
+      background: var(--ember-orange);
+      color: var(--navy);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      padding: 0.2rem 0.8rem;
+    }
+
+    .board-photo {
+      width: 180px;
+      height: 140px;
+      background: linear-gradient(135deg, #243040, #1a2535);
+      border: 2px solid rgba(109, 143, 163, 0.2);
+      float: left;
+      margin: 0 2rem 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      transform: rotate(1.5deg);
+      position: relative;
+    }
+
+    .board-photo::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 16px;
+      background: rgba(232, 93, 38, 0.6);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .board-photo::before {
+      content: 'EVIDENCE';
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .5rem;
+      letter-spacing: 2.5px;
+      color: rgba(245, 241, 235, .2);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .board-string {
+      position: absolute;
+      top: 10px;
+      left: 200px;
+      right: 2.5rem;
+      height: 1px;
+      background: rgba(232, 93, 38, 0.35);
+    }
+
+    .board-details {
+      overflow: hidden;
+    }
+
+    .board-details h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: var(--sand);
+    }
+
+    .detail-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .chip {
+      padding: 0.25rem 0.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+
+    .chip.dept {
+      border-color: #1565C0;
+      color: rgba(227, 240, 255, .9);
+      background: rgba(21, 101, 192, .15);
+    }
+
+    .chip.docs {
+      border-color: var(--sand);
+      color: rgba(227, 240, 255, .85);
+      background: rgba(227, 240, 255, .06);
+    }
+
+    .chip.urgent {
+      border-color: var(--ember-red);
+      color: var(--ember-red);
+      background: rgba(232, 93, 38, 0.08);
+    }
+
+    .board-details p {
+      font-size: 0.85rem;
+      color: rgba(248, 245, 240, 0.5);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .board-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      clear: both;
+    }
+
+    .info-item {
+      padding: 0.75rem 1rem;
+      background: rgba(109, 143, 163, 0.05);
+      border-left: 2px solid rgba(109, 143, 163, 0.2);
+    }
+
+    .info-item .label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(248, 245, 240, 0.35);
+      margin-bottom: 0.25rem;
+    }
+
+    .info-item .value {
+      font-size: 0.85rem;
+      color: rgba(248, 245, 240, 0.85);
+    }
+
+    .info-item .value a {
+      color: #E3F0FF;
+      text-decoration: none;
+    }
+
+    .info-item .value a:hover {
+      text-decoration: underline;
+    }
+
+    .generate-letter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, var(--ember-orange), var(--ember-red));
+      color: white;
+      padding: 0.8rem 1.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      width: auto;
+    }
+
+    .generate-letter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232, 93, 38, 0.35);
+    }
+
+    /* ── PHASE 2 — PETITION ENGINE (from index.html) ───────────────────────── */
+    .petition-section {
+      padding: 6rem 3rem;
+      position: relative;
+      overflow: hidden;
+      background: #FFFFFF;
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    .fire-card {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    .petition-section .sec-sub {
+      color: #546E7A
+    }
+
+    .petition-grid {
+      max-width: 1100px;
+      margin: 4rem auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center
+    }
+
+    .fire-card {
+      background: #1a2535;
+      border: 1px solid rgba(232, 93, 38, 0.15);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 1s ease;
+    }
+
+    .fire-edges {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      animation: fire-glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes fire-glow {
+      from {
+        box-shadow: inset 0 0 20px rgba(232, 93, 38, 0.05);
+      }
+
+      to {
+        box-shadow: inset 0 0 40px rgba(232, 93, 38, 0.15);
+      }
+    }
+
+    .fire-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: rgba(232, 93, 38, 0.12);
+      border: 1px solid rgba(232, 93, 38, 0.3);
+      color: var(--ember-orange);
+      padding: .28rem .75rem;
+      font-size: .68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .fire-badge .fire-icon {
+      animation: flicker 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      from {
+        opacity: 0.7;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fire-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+      color: var(--sand);
+    }
+
+    .fire-card p {
+      font-size: .85rem;
+      color: rgba(248, 245, 240, 0.5);
+      line-height: 1.65;
+      margin-bottom: 1.4rem;
+    }
+
+    .deadline-timer {
+      background: rgba(232, 93, 38, 0.08);
+      border: 1px solid rgba(232, 93, 38, 0.15);
+      padding: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .timer-label {
+      font-size: .65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ember-red);
+      margin-bottom: .4rem;
+      display: block;
+    }
+
+    .timer-display {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--ember-orange);
+      letter-spacing: 4px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(232, 93, 38, 0.08);
+      border: 1px solid rgba(232, 93, 38, 0.15);
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 71%;
+      background: linear-gradient(90deg, var(--ember-orange), var(--ember-red));
+      border-radius: 2px;
+      animation: prog-fill 2.5s ease forwards;
+    }
+
+    @keyframes prog-fill {
+      from {
+        width: 0
+      }
+
+      to {
+        width: 71%
+      }
+    }
+
+    .supporter-pile {
+      display: flex;
+      align-items: center;
+      gap: -4px;
+      margin-bottom: 1.2rem;
+    }
+
+    .supporter-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--navy);
+      background: #1565C0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      margin-left: -6px;
+      color: #fff;
+    }
+
+    .supporter-avatar:first-child {
+      margin-left: 0
+    }
+
+    .supporter-avatar:nth-child(2) {
+      background: #0B3D91
+    }
+
+    .supporter-avatar:nth-child(3) {
+      background: #1976D2
+    }
+
+    .supporter-avatar:nth-child(4) {
+      background: #1565C0
+    }
+
+    .supporter-avatar:nth-child(5) {
+      background: #0D47A1
+    }
+
+    .supporter-count {
+      font-size: .8rem;
+      color: rgba(248, 245, 240, 0.5);
+      margin-left: .7rem
+    }
+
+    .support-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(232, 93, 38, 0.2), rgba(244, 162, 97, 0.2));
+      border: 1px solid rgba(232, 93, 38, 0.3);
+      color: var(--ember-orange);
+      padding: .85rem;
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: all .3s;
+    }
+
+    .support-btn:hover {
+      background: rgba(232, 93, 38, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .petition-info .sec-title {
+      text-align: left;
+      color: #0B3D91;
+      margin-bottom: .5rem
+    }
+
+    .petition-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 2rem
+    }
+
+    .pf-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start
+    }
+
+    .pf-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      color: #1565C0;
+    }
+
+    .pf-item h4 {
+      font-size: .88rem;
+      font-weight: 500;
+      margin-bottom: .2rem;
+      color: #0B3D91
+    }
+
+    .pf-item p {
+      font-size: .79rem;
+      color: #546E7A;
+      line-height: 1.55
+    }
+
+    .petition-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      margin-top: 2rem;
+      padding: .85rem 1.8rem;
+      background: #1565C0;
+      color: #FFFFFF;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all .3s;
+    }
+
+    .petition-cta-btn:hover {
+      background: #0B3D91;
+      color: #fff
+    }
+
+    /* ── PHASE 3 — ADOPT-A-PROBLEM (from index.html) ───────────────────────── */
+    .adopt-section {
+      padding: 6rem 3rem;
+      background: rgba(82, 183, 136, 0.03);
+      border-top: 1px solid rgba(82, 183, 136, 0.1);
+      border-bottom: 1px solid rgba(82, 183, 136, 0.1);
+    }
+
+    .adopt-card {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      background: #1a2535;
+      border: 1px solid rgba(82, 183, 136, 0.15);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ribbon-cut-demo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(82, 183, 136, 0.15);
+      overflow: hidden;
+    }
+
+    .before-after-label {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      text-align: center;
+    }
+
+    .before-label {
+      background: rgba(232, 93, 38, 0.1);
+      color: var(--ember-red);
+      border-right: 1px solid rgba(82, 183, 136, 0.15);
+    }
+
+    .after-label {
+      background: rgba(82, 183, 136, 0.1);
+      color: var(--ember-green);
+    }
+
+    .before-visual,
+    .after-visual {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+    }
+
+    .before-visual {
+      background: rgba(232, 93, 38, 0.05);
+      border-right: 1px solid rgba(82, 183, 136, 0.15);
+    }
+
+    .after-visual {
+      background: rgba(82, 183, 136, 0.05);
+    }
+
+    .swipe-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(248, 245, 240, 0.2);
+    }
+
+    .plaque {
+      background: linear-gradient(135deg, rgba(219, 208, 190, 0.1), rgba(219, 208, 190, 0.05));
+      border: 1px solid rgba(219, 208, 190, 0.25);
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plaque::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(219, 208, 190, 0.05), transparent);
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .plaque-icon {
+      font-size: 2rem;
+    }
+
+    .plaque-text h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--sand);
+      margin-bottom: 0.2rem;
+    }
+
+    .plaque-text p {
+      font-size: 0.78rem;
+      color: rgba(248, 245, 240, 0.45);
+    }
+
+    .adopt-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .adopt-stats-grid .info-item {
+      padding: 0.75rem 1rem;
+      background: rgba(109, 143, 163, 0.05);
+      border-left: 2px solid rgba(109, 143, 163, 0.2);
+    }
+
+    .adopt-stats-grid .info-item .label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(248, 245, 240, 0.35);
+      margin-bottom: 0.25rem;
+    }
+
+    .adopt-stats-grid .info-item .value {
+      font-size: 0.85rem;
+      color: rgba(248, 245, 240, 0.85);
+    }
+
+    .adopt-stats-grid .info-item .value.done {
+      color: var(--ember-green);
+      font-weight: 600;
+    }
+
+    .adopt-cta {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(82, 183, 136, 0.05);
+      border: 1px solid rgba(82, 183, 136, 0.1);
+    }
+
+    .adopt-cta p {
+      font-size: 0.85rem;
+      color: rgba(248, 245, 240, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .btn-green {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--ember-green);
+      color: var(--navy);
+      padding: 0.8rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .btn-green:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(82, 183, 136, 0.3);
+    }
+
+    /* ── LIVE FEED ────────────────────────────────────────── */
+    .feed-section {
+      padding: 6rem 3rem;
+      background: #F4F6F8
+    }
+
+    .feed-grid {
+      max-width: 1100px;
+      margin: 3rem auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(21, 101, 192, .08);
+    }
+
+    .feed-card {
+      background: #FFFFFF;
+      padding: 1.5rem;
+      border-left: 3px solid transparent;
+      transition: border-color .3s, background .3s;
+      cursor: pointer;
+    }
+
+    .feed-card:hover {
+      background: #F4F6F8
+    }
+
+    .feed-card.resolved {
+      border-left-color: var(--ember-green);
+    }
+
+    .feed-card.active {
+      border-left-color: #1565C0;
+    }
+
+    .feed-card.petition-fire {
+      border-left-color: var(--ember-red);
+    }
+
+    .feed-status {
+      font-size: .62rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem
+    }
+
+    .feed-card.active .feed-status {
+      color: #1565C0
+    }
+
+    .feed-card.petition-fire .feed-status {
+      color: var(--ember-red)
+    }
+
+    .feed-card.resolved .feed-status {
+      color: var(--ember-green)
+    }
+
+    .feed-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: breathe 1.5s ease-in-out infinite
+    }
+
+    .feed-card h4 {
+      font-size: .9rem;
+      margin-bottom: .3rem;
+      color: #0B3D91
+    }
+
+    .feed-card .meta {
+      font-size: .74rem;
+      color: #546E7A
+    }
+
+    .feed-card .supporters {
+      margin-top: .75rem;
+      font-size: .7rem;
+      color: #546E7A
+    }
+
+    /* ── FOOTER — same colour as header ──────────────────────────────── */
+    footer {
+      background: #0B3D91;
+      border-top: 3px solid #1565C0;
+      padding: 4rem 3rem 2rem
+    }
+
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .footer-brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 3rem;
+      margin-bottom: 3rem
+    }
+
+    .footer-brand {
+      flex-shrink: 0;
+      max-width: 260px
+    }
+
+    .footer-brand p {
+      font-size: .84rem;
+      line-height: 1.72;
+      color: rgba(255, 255, 255, .5);
+      margin-top: 1rem;
+      font-weight: 300
+    }
+
+    .footer-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      flex: 1
+    }
+
+    .footer-col h5 {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #E3F0FF;
+      margin-bottom: 1.1rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15)
+    }
+
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: .55rem
+    }
+
+    .footer-col a {
+      font-size: .83rem;
+      color: rgba(255, 255, 255, .45);
+      transition: color .25s
+    }
+
+    .footer-col a:hover {
+      color: #FFFFFF
+    }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      margin: 2rem 0
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .footer-bottom p {
+      font-size: .76rem;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .footer-langs {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: .8rem;
+      color: rgba(255, 255, 255, .25)
+    }
+
+    /* ── FAB ─────────────────────────────────────────────── */
+    .fab {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem
+    }
+
+    .fab-btn {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: #1565C0;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 28px rgba(21, 101, 192, .4);
+      transition: transform .25s cubic-bezier(.16, 1, .3, 1), box-shadow .3s;
+      position: relative;
+    }
+
+    .fab-btn::before,
+    .fab-btn::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1.5px solid #1565C0;
+      animation: fab-pulse 2.5s ease-out infinite;
+      opacity: 0;
+    }
+
+    .fab-btn::after {
+      animation-delay: 1.1s
+    }
+
+    @keyframes fab-pulse {
+      0% {
+        transform: scale(.85);
+        opacity: .6
+      }
+
+      100% {
+        transform: scale(1.5);
+        opacity: 0
+      }
+    }
+
+    .fab-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 14px 36px rgba(21, 101, 192, .5)
+    }
+
+    .fab-label {
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #1565C0
+    }
+
+    /* ── OVERLAYS ────────────────────────────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(11, 61, 145, .85);
+      backdrop-filter: blur(14px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center
+    }
+
+    .overlay.open {
+      display: flex
+    }
+
+    @media(min-width:640px) {
+      .overlay {
+        align-items: center
+      }
+    }
+
+    .sheet {
+      width: 100%;
+      max-width: 520px;
+      background: #FFFFFF;
+      border: 1px solid rgba(21, 101, 192, .2);
+      border-bottom: none;
+      border-radius: 20px 20px 0 0;
+      padding: 0 2rem 3rem;
+      max-height: 92vh;
+      overflow-y: auto;
+      animation: sheet-up .36s cubic-bezier(.16, 1, .3, 1) forwards;
+      position: relative;
+    }
+
+    @media(min-width:640px) {
+      .sheet {
+        border-radius: 12px;
+        border-bottom: 1px solid rgba(21, 101, 192, .2);
+        max-height: 88vh
+      }
+    }
+
+    @keyframes sheet-up {
+      from {
+        transform: translateY(40px);
+        opacity: 0
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    .sheet-drag {
+      width: 36px;
+      height: 4px;
+      background: rgba(21, 101, 192, .2);
+      border-radius: 2px;
+      margin: 1rem auto 1.5rem
+    }
+
+    .sheet-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #546E7A;
+      font-size: 1.1rem;
+      transition: all .2s
+    }
+
+    .sheet-close:hover {
+      color: #0B3D91;
+      background: rgba(21, 101, 192, .08)
+    }
+
+    /* auth */
+    .auth-head {
+      text-align: center;
+      margin-bottom: 1.8rem
+    }
+
+    .auth-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: .3rem;
+      color: #0B3D91
+    }
+
+    .auth-head p {
+      font-size: .86rem;
+      color: #546E7A
+    }
+
+    .auth-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid rgba(21, 101, 192, .2);
+      margin-bottom: 1.8rem
+    }
+
+    .auth-tab {
+      padding: .65rem;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #546E7A;
+      text-align: center;
+      transition: all .25s
+    }
+
+    .auth-tab.active {
+      background: #1565C0;
+      color: #FFFFFF
+    }
+
+    .fld {
+      margin-bottom: .9rem
+    }
+
+    .fld label {
+      display: block;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #546E7A;
+      margin-bottom: .4rem
+    }
+
+    .fld input,
+    .fld select {
+      width: 100%;
+      background: #F4F6F8;
+      border: 1px solid rgba(21, 101, 192, .2);
+      color: #1A237E;
+      padding: .78rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .93rem;
+      outline: none;
+      transition: border-color .25s, background .25s
+    }
+
+    .fld input::placeholder {
+      color: #90A4AE
+    }
+
+    .fld input:focus,
+    .fld select:focus {
+      border-color: #1565C0;
+      background: #FFFFFF
+    }
+
+    .divider-or {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin: 1rem 0;
+      font-size: .73rem;
+      color: #90A4AE
+    }
+
+    .divider-or::before,
+    .divider-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(21, 101, 192, .15)
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: .9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+      transition: all .25s;
+      margin-bottom: .7rem
+    }
+
+    .btn-full-sky {
+      background: #1565C0;
+      color: #FFFFFF
+    }
+
+    .btn-full-sky:hover {
+      background: #0B3D91
+    }
+
+    .btn-full-outline {
+      background: transparent;
+      border: 1px solid rgba(21, 101, 192, .25);
+      color: #546E7A
+    }
+
+    .btn-full-outline:hover {
+      border-color: #1565C0;
+      color: #1565C0
+    }
+
+    .goog-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .65rem
+    }
+
+    .auth-switch {
+      text-align: center;
+      font-size: .75rem;
+      color: #90A4AE;
+      margin-top: .8rem
+    }
+
+    .auth-switch a {
+      color: #1565C0;
+      cursor: pointer
+    }
+
+    /* wizard */
+    .wiz-prog {
+      display: flex;
+      border-bottom: 1px solid rgba(21, 101, 192, .15);
+      margin-bottom: 1.8rem
+    }
+
+    .wstep {
+      flex: 1;
+      padding: .75rem .3rem;
+      text-align: center;
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #90A4AE;
+      border-bottom: 2px solid transparent;
+      transition: all .3s
+    }
+
+    .wstep.active {
+      color: #1565C0;
+      border-bottom-color: #1565C0
+    }
+
+    .wstep.done {
+      color: #2E7D32;
+      border-bottom-color: #2E7D32
+    }
+
+    .wpanel {
+      display: none
+    }
+
+    .wpanel.active {
+      display: block
+    }
+
+    .wiz-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: .35rem;
+      color: #0B3D91
+    }
+
+    .wiz-sub {
+      font-size: .83rem;
+      color: #546E7A;
+      margin-bottom: 1.6rem;
+      font-weight: 300
+    }
+
+    /* upload */
+    .upload-zone {
+      border: 1.5px dashed rgba(21, 101, 192, .28);
+      padding: 2.2rem 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: border-color .25s, background .25s;
+    }
+
+    .upload-zone:hover {
+      border-color: #1565C0;
+      background: rgba(21, 101, 192, .04)
+    }
+
+    .upload-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer
+    }
+
+    .upload-ico {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto .7rem;
+      color: rgba(21, 101, 192, .45)
+    }
+
+    .upload-zone p {
+      font-size: .83rem;
+      color: #546E7A;
+      line-height: 1.55
+    }
+
+    .upload-zone strong {
+      color: #1565C0;
+      font-weight: 500
+    }
+
+    .img-preview {
+      display: none;
+      position: relative;
+      margin-bottom: 1rem
+    }
+
+    .img-preview img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border: 1px solid rgba(21, 101, 192, .2)
+    }
+
+    .preview-rm {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+      background: rgba(11, 61, 145, .85);
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      cursor: pointer
+    }
+
+    .ai-bar {
+      display: none;
+      align-items: center;
+      gap: .75rem;
+      padding: .85rem 1rem;
+      background: rgba(21, 101, 192, .06);
+      border: 1px solid rgba(21, 101, 192, .2);
+      margin-bottom: 1rem
+    }
+
+    .ai-bar.vis {
+      display: flex
+    }
+
+    .ai-spin {
+      width: 17px;
+      height: 17px;
+      border: 2px solid rgba(21, 101, 192, .2);
+      border-top-color: #1565C0;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .ai-bar p {
+      font-size: .8rem;
+      color: #1565C0
+    }
+
+    /* result mini placard in wizard */
+    .mini-placard {
+      display: none;
+      background: #F4F6F8;
+      border: 1px solid rgba(21, 101, 192, .18);
+      padding: 1.2rem;
+      margin-bottom: 1rem
+    }
+
+    .mini-placard.vis {
+      display: block
+    }
+
+    .mini-placard::before {
+      content: 'AI RESULT';
+      display: block;
+      font-size: .6rem;
+      letter-spacing: 2px;
+      color: #1565C0;
+      margin-bottom: .8rem;
+      font-weight: 600
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: .8rem;
+      padding: .45rem 0;
+      border-bottom: 1px solid rgba(21, 101, 192, .08);
+      font-size: .82rem
+    }
+
+    .result-row:last-child {
+      border-bottom: none
+    }
+
+    .rkey {
+      font-size: .62rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #546E7A;
+      flex-shrink: 0;
+      padding-top: .12rem
+    }
+
+    .rval {
+      color: #1A237E;
+      text-align: right;
+      line-height: 1.45
+    }
+
+    .rval.hl {
+      color: #1565C0;
+      font-weight: 500
+    }
+
+    .rval a {
+      color: #1565C0
+    }
+
+    /* location */
+    .loc-box {
+      display: flex;
+      align-items: flex-start;
+      gap: .8rem;
+      padding: 1rem;
+      background: rgba(21, 101, 192, .05);
+      border: 1px solid rgba(21, 101, 192, .18);
+      margin-bottom: 1rem
+    }
+
+    .loc-ico {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: .1rem
+    }
+
+    .loc-t h4 {
+      font-size: .88rem;
+      font-weight: 500;
+      margin-bottom: .2rem;
+      color: #0B3D91
+    }
+
+    .loc-t p {
+      font-size: .76rem;
+      color: #546E7A
+    }
+
+    .letter-box {
+      background: #F4F6F8;
+      border: 1px solid rgba(21, 101, 192, .15);
+      padding: 1.3rem;
+      font-size: .8rem;
+      line-height: 1.85;
+      color: #1A237E;
+      white-space: pre-wrap;
+      max-height: 260px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic
+    }
+
+    /* success */
+    .success-wrap {
+      text-align: center;
+      padding: 2rem 0
+    }
+
+    .success-ring {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 1.5px solid #2E7D32;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      position: relative
+    }
+
+    .success-ring::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(46, 125, 50, .2);
+      animation: fab-pulse 2.5s ease-out infinite
+    }
+
+    .success-ring svg {
+      width: 34px;
+      height: 34px;
+      color: #2E7D32
+    }
+
+    .success-wrap h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+      color: #0B3D91
+    }
+
+    .success-wrap p {
+      font-size: .86rem;
+      color: #546E7A;
+      margin-bottom: .25rem
+    }
+
+    .case-badge {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      color: #1565C0;
+      background: rgba(21, 101, 192, .08);
+      padding: .45rem 1.2rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(21, 101, 192, .2)
+    }
+
+    .wiz-nav {
+      display: flex;
+      gap: .7rem;
+      margin-top: 1.3rem
+    }
+
+    .btn-wback {
+      flex: 0 0 auto;
+      padding: .82rem 1.3rem;
+      border: 1px solid rgba(21, 101, 192, .2);
+      color: #546E7A;
+      font-size: .8rem;
+      font-weight: 500;
+      transition: all .25s
+    }
+
+    .btn-wback:hover {
+      border-color: #1565C0;
+      color: #1565C0
+    }
+
+    .btn-wnext {
+      flex: 1;
+      padding: .82rem;
+      background: #1565C0;
+      color: #FFFFFF;
+      font-size: .86rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      transition: background .25s
+    }
+
+    .btn-wnext:hover {
+      background: #0B3D91
+    }
+
+    .btn-wnext:disabled {
+      background: rgba(21, 101, 192, .15);
+      color: #90A4AE;
+      cursor: not-allowed
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .65s cubic-bezier(.16, 1, .3, 1), transform .65s cubic-bezier(.16, 1, .3, 1)
+    }
+
+    .reveal.up {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .d1 {
+      transition-delay: .1s
+    }
+
+    .d2 {
+      transition-delay: .22s
+    }
+
+    .d3 {
+      transition-delay: .34s
+    }
+
+    /* USER TYPE CARDS */
+    .utype-head {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #546E7A;
+      margin-bottom: .8rem;
+      display: block
+    }
+
+    .utype-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .45rem;
+      margin-bottom: 1.2rem
+    }
+
+    .utype-card {
+      border: 1.5px solid rgba(21, 101, 192, .18);
+      padding: .55rem .75rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all .22s;
+      background: #F4F6F8;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .utype-card:hover {
+      border-color: rgba(21, 101, 192, .4);
+      background: rgba(21, 101, 192, .05)
+    }
+
+    .utype-card.sel {
+      border-color: #1565C0;
+      background: rgba(21, 101, 192, .08);
+      box-shadow: 0 0 0 1px #1565C0
+    }
+
+    .utype-card .uico {
+      font-size: 1.3rem;
+      flex-shrink: 0
+    }
+
+    .utype-card .ulbl {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      color: #0B3D91;
+      line-height: 1.2
+    }
+
+    .utype-card .udesc {
+      font-size: .58rem;
+      color: #78909C;
+      margin-top: .1rem;
+      line-height: 1.3
+    }
+
+    /* scrollable signup sheet */
+    .sheet-scroll {
+      max-height: 82vh;
+      overflow-y: auto
+    }
+
+    .sheet-scroll::-webkit-scrollbar {
+      width: 4px
+    }
+
+    .sheet-scroll::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    .sheet-scroll::-webkit-scrollbar-thumb {
+      background: var(--sky-dim);
+      border-radius: 2px
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:900px) {
+      nav {
+        padding: 0 1.5rem
+      }
+
+      .nav-links {
+        display: none
+      }
+
+      .hero-content {
+        padding: 0 2rem
+      }
+
+      .hero-stats {
+        left: 2rem
+      }
+
+      .phase1-section,
+      .petition-section,
+      .adopt-section,
+      .feed-section {
+        padding: 5rem 1.5rem
+      }
+
+      .petition-grid {
+        grid-template-columns: 1fr
+      }
+
+      .board-info-grid {
+        grid-template-columns: 1fr
+      }
+
+      .adopt-stats-grid {
+        grid-template-columns: 1fr
+      }
+
+      .feed-grid {
+        grid-template-columns: 1fr
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <svg class="logo-svg" viewBox="0 0 34 44" fill="none">
+        <path d="M17 2C10.37 2 5 7.37 5 14C5 24.5 17 42 17 42S29 24.5 29 14C29 7.37 23.63 2 17 2Z" fill="#E3F0FF" />
+        <circle cx="17" cy="14" r="7" fill="#0B3D91" />
+        <line x1="6" y1="14" x2="28" y2="14" stroke="#f5f1eb" stroke-width="1.2" opacity=".5" />
+        <path d="M8 14 L11 10 L14 17 L17 7 L20 17 L23 10 L26 14" stroke="#f5f1eb" stroke-width="1.4" fill="none"
+          stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span class="nav-brand">Civic <em>Pulse</em></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#phase1">Report</a></li>
+      <li><a href="#petition">Petition</a></li>
+      <li><a href="#adopt">Adopt</a></li>
+      <li><a href="#feed">City Feed</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-illo"><canvas id="hero-canvas"></canvas></div>
+    <div
+      style="position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(8,16,26,.55) 0%,rgba(8,16,26,.72) 60%,rgba(8,16,26,.9) 100%)">
+    </div>
+
+    <div class="hero-row">
+      <!-- LEFT: main copy -->
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-pulse"></span>
+          India's civic reporting movement
+        </div>
+        <h1 class="hero-title">
+          Your city<br>
+          <span class="ital"><span id="hero-i-dot">i</span>s listening.</span><br>
+          <span class="sand">Make it act.</span>
+        </h1>
+        <div class="tw-wrap">
+          <span class="tw-text" id="tw"></span><span class="tw-cur"></span>
+        </div>
+        <div class="hero-btns">
+          <a href="/login" class="btn-cta" style="text-decoration:none">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+            <span>Get Started</span>
+          </a>
+          <a href="#phase1" class="btn-text-link">See how it works →</a>
+        </div>
+        <!-- LIVE STATS BAR -->
+        <div class="hero-stats-bar">
+          <div class="hstat">
+            <span class="hstat-dot"></span>
+            <span class="hstat-num" id="stat-cities">0</span>
+            <span class="hstat-label">Cities Active</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-dot" style="background:#f4a261"></span>
+            <span class="hstat-num" id="stat-filed">0</span>
+            <span class="hstat-label">Cases Filed</span>
+          </div>
+          <div class="hstat" style="background:rgba(82,183,136,0.12);border-color:rgba(82,183,136,0.3)">
+            <span class="hstat-dot" style="background:#52b788"></span>
+            <span class="hstat-num" id="stat-resolved" style="color:#52b788">0</span>
+            <span class="hstat-label">Cases Resolved</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    </div>
+
+  </section>
+
+  <!-- PHASE 1 — AI RESULT CARD (DETECTIVE BOARD from index.html) -->
+  <section class="phase1-section" id="phase1">
+    <div style="max-width:1100px;margin:0 auto">
+      <span class="sec-tag reveal">Phase 01 · AI Result Card</span>
+      <h2 class="sec-title reveal d1">Your Report, <em>Like a Case File</em></h2>
+      <p class="sec-sub reveal d2">Snap a photo of any civic issue. Our AI identifies it, routes it to the right
+        department anywhere in India, prepares your complaint, and tracks it until the city acts — or faces public
+        petition.</p>
+
+      <!-- THE DETECTIVE BOARD from index.html -->
+      <div class="reveal d2">
+        <div class="detective-board">
+          <div class="board-photo">🗑️</div>
+          <div class="board-string"></div>
+          <div class="board-details">
+            <h3>Overflowing Garbage Pile Detected</h3>
+            <div class="detail-chips">
+              <span class="chip dept">Solid Waste Management Dept</span>
+              <span class="chip urgent">High Priority</span>
+              <span class="chip docs">3 Documents Required</span>
+            </div>
+            <p>AI detected large accumulation of household waste posing public health risk. Location matched to Ward 42,
+              Zone C, BMC jurisdiction. Automated complaint drafted.</p>
+          </div>
+
+          <div class="board-info-grid">
+            <div class="info-item">
+              <div class="label">📍 Detected Location</div>
+              <div class="value">Andheri West, Ward 42, Mumbai</div>
+            </div>
+            <div class="info-item">
+              <div class="label">🏛️ Municipal Corporation</div>
+              <div class="value">Brihanmumbai Municipal Corporation (BMC)</div>
+            </div>
+            <div class="info-item">
+              <div class="label">🌐 Official Website</div>
+              <div class="value"><a href="https://portal.mcgm.gov.in" target="_blank">portal.mcgm.gov.in ↗</a></div>
+            </div>
+            <div class="info-item">
+              <div class="label">📍 Office Address</div>
+              <div class="value">Mahapalika Marg, CST Area, Mumbai 400001</div>
+            </div>
+            <div class="info-item">
+              <div class="label">📋 Documents Needed</div>
+              <div class="value">Photo Evidence · Aadhaar / Voter ID · Contact Details</div>
+            </div>
+            <div class="info-item">
+              <div class="label">⏱️ Resolution Deadline</div>
+              <div class="value" style="color:var(--ember-orange);">7 Days from Filing</div>
+            </div>
+          </div>
+
+          <button class="generate-letter-btn" onclick="generateLetter()">
+            ✍️ AI Generate Formal Complaint Letter
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 2 — PETITION ENGINE (from index.html) -->
+  <section class="petition-section" id="petition">
+    <div style="max-width:1100px;margin:0 auto">
+      <span class="sec-tag reveal" style="color:var(--ember-orange);">Phase 02 · Petition Engine</span>
+      <h2 class="sec-title reveal d1" style="color:#0B3D91">Ignored? <span style="color:var(--ember-red);">Time to Burn
+          Brighter.</span></h2>
+      <p class="sec-sub reveal d2">A countdown begins the moment you file. When authorities go silent past the deadline,
+        your case doesn't disappear — it transforms into a public petition that cannot be ignored.</p>
+
+      <div class="petition-grid">
+        <div class="fire-card" id="fireCard">
+          <div class="fire-edges"></div>
+          <div class="fire-badge">
+            <span class="fire-icon">🔥</span>
+            PETITION ACTIVE
+          </div>
+          <h3>Blocked Drainage — MG Road Junction</h3>
+          <p>Reported 14 days ago. No action taken. Department deadline passed. Citizens are rallying.</p>
+
+          <div class="deadline-timer">
+            <span class="timer-label">⏰ Deadline Passed</span>
+            <div class="timer-display" id="petTimer">07:14:32</div>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+
+          <div class="supporter-pile" id="suppPile">
+            <div class="supporter-avatar">🧑</div>
+            <div class="supporter-avatar">👩</div>
+            <div class="supporter-avatar">👨</div>
+            <div class="supporter-avatar">🧕</div>
+            <div class="supporter-avatar">👴</div>
+            <span class="supporter-count" id="suppCount">+238 supporters</span>
+          </div>
+
+          <button class="support-btn" id="suppBtn" onclick="addSupporter()">
+            🔥 Support This Petition (243)
+          </button>
+        </div>
+
+        <div class="petition-info reveal d1">
+          <h2 class="sec-title" style="color:#0B3D91;margin-bottom:.5rem">The Spark That<br><span
+              style="color:var(--ember-red);">Can't Be Ignored</span></h2>
+          <p style="color:#546E7A;font-size:0.9rem;line-height:1.7;margin-top:1rem;">
+            Every case has a deadline. When authorities ignore it, your report doesn't disappear — it transforms. The
+            page edges glow amber, then orange, then red. A torch appears. Each supporter makes it brighter.
+          </p>
+          <div class="petition-features">
+            <div class="pf-item">
+              <div class="pf-icon">⏱️</div>
+              <div>
+                <h4>Countdown Timers Everywhere</h4>
+                <p>Every case shows exactly how many days the department has left to act. Urgency is always visible.</p>
+              </div>
+            </div>
+            <div class="pf-item">
+              <div class="pf-icon">📢</div>
+              <div>
+                <h4>Auto-Escalation</h4>
+                <p>Ignored petitions automatically notify higher authorities — district commissioner, state officials.
+                </p>
+              </div>
+            </div>
+            <div class="pf-item">
+              <div class="pf-icon">🌐</div>
+              <div>
+                <h4>Public Shareable Page</h4>
+                <p>Every case has its own URL. Share to WhatsApp, Twitter, Instagram to build community pressure.</p>
+              </div>
+            </div>
+            <div class="pf-item">
+              <div class="pf-icon">👥</div>
+              <div>
+                <h4>Community Proof</h4>
+                <p>Supporter avatars cascade down like falling leaves. Their presence makes the problem undeniable.</p>
+              </div>
+            </div>
+          </div>
+          <a href="/petition_engine.html" target="_blank" class="petition-cta-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+            View All Active Petitions
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 3 — ADOPT-A-PROBLEM (from index.html) -->
+  <section class="adopt-section" id="adopt">
+    <div style="max-width:1100px;margin:0 auto">
+      <span class="sec-tag reveal" style="color:var(--ember-green);">Phase 03 · Community Action</span>
+      <h2 class="sec-title reveal d1" style="color:#0B3D91">When Government Fails,<br><span
+          style="color:var(--ember-green);">Community Prevails.</span></h2>
+      <p class="sec-sub reveal d2">Citizens, local businesses, and NGOs can fund the resolution of civic issues
+        directly. Transparent. Accountable. Celebrated.</p>
+
+      <div class="adopt-card reveal">
+        <div class="ribbon-cut-demo">
+          <div class="before-label before-after-label">Before</div>
+          <div class="after-label before-after-label">After</div>
+          <div class="before-visual">
+            <span style="font-size:3rem;">🕳️</span>
+            <span class="swipe-hint">Swipe →</span>
+          </div>
+          <div class="after-visual">
+            <span style="font-size:3rem;">🛣️</span>
+          </div>
+        </div>
+
+        <div class="plaque">
+          <span class="plaque-icon">🏅</span>
+          <div class="plaque-text">
+            <h4>Restored by Ravi Mehta & 14 Community Members</h4>
+            <p>MG Road Pothole — Adopted February 2025 · Andheri West, Mumbai</p>
+          </div>
+        </div>
+
+        <div class="adopt-stats-grid">
+          <div class="info-item">
+            <div class="label">💰 Funding Goal</div>
+            <div class="value">₹45,000</div>
+          </div>
+          <div class="info-item">
+            <div class="label">✅ Raised</div>
+            <div class="value done">₹45,000 (100%)</div>
+          </div>
+          <div class="info-item">
+            <div class="label">👷 Status</div>
+            <div class="value done">✔ Resolved</div>
+          </div>
+        </div>
+
+        <div class="adopt-cta">
+          <p>See a problem government won't fix? Adopt it. Fund it. Own the victory.</p>
+          <a href="/ADOPT_A_PROBLEM.html" target="_blank" class="btn-green">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v8M8 12h8" />
+            </svg>
+            Adopt a Problem Near You
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TOOLS SLIDER -->
+  <section id="tools-slider" style="padding:5rem 3rem;background:#0B3D91;overflow:hidden;position:relative">
+    <div style="max-width:1100px;margin:0 auto">
+      <div
+        style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem">
+        <div>
+          <span
+            style="font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);display:block;margin-bottom:.5rem">Explore</span>
+          <h2
+            style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:#fff;line-height:1.1">
+            Your City, <em style="color:#E3F0FF">Visualised.</em></h2>
+        </div>
+        <div style="display:flex;gap:.6rem">
+          <button onclick="slPrev()"
+            style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:1.1rem;cursor:pointer">←</button>
+          <button onclick="slNext()"
+            style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:1.1rem;cursor:pointer">→</button>
+        </div>
+      </div>
+      <div style="overflow:hidden">
+        <div id="slTrack" style="display:flex;gap:1.5rem;transition:transform .5s cubic-bezier(.16,1,.3,1)">
+          <div onclick="window.open('/heat_map.html','_blank')"
+            style="flex:0 0 calc(50% - .75rem);min-width:300px;background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 20px 50px rgba(0,0,0,.3);transition:transform .3s"
+            onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform=''">
+            <div
+              style="height:170px;background:linear-gradient(135deg,#0d1b2e,#1565C0);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+              <svg style="position:absolute;inset:0;opacity:.5" width="100%" height="100%">
+                <circle cx="30%" cy="45%" r="40" fill="rgba(255,100,50,.5)" />
+                <circle cx="60%" cy="30%" r="55" fill="rgba(255,180,50,.35)" />
+                <circle cx="75%" cy="65%" r="30" fill="rgba(232,93,38,.6)" />
+                <circle cx="50%" cy="75%" r="35" fill="rgba(82,183,136,.35)" />
+              </svg>
+              <div style="position:relative;z-index:2;text-align:center">
+                <div style="font-size:2.5rem">🗺️</div>
+                <div
+                  style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:4px;color:rgba(255,255,255,.7);margin-top:.3rem">
+                  LIVE HEATMAP</div>
+              </div>
+              <div
+                style="position:absolute;top:.8rem;right:.8rem;background:rgba(82,183,136,.9);color:#fff;font-size:.58rem;font-weight:700;letter-spacing:2px;padding:.25rem .6rem;border-radius:20px">
+                ● LIVE</div>
+            </div>
+            <div style="padding:1.3rem 1.5rem 1.5rem">
+              <div
+                style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1565C0;margin-bottom:.3rem">
+                City Intelligence</div>
+              <h3
+                style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#0B3D91;margin-bottom:.4rem">
+                City Problem Heat Map</h3>
+              <p style="font-size:.78rem;color:#546E7A;line-height:1.6;margin-bottom:.9rem">See where civic issues
+                cluster across every ward in real time.</p>
+              <div style="display:flex;gap:.35rem;flex-wrap:wrap"><span
+                  style="background:#E3F0FF;color:#1565C0;font-size:.58rem;font-weight:600;padding:.18rem .55rem;border-radius:20px">Heat
+                  Zones</span><span
+                  style="background:#E3F0FF;color:#1565C0;font-size:.58rem;font-weight:600;padding:.18rem .55rem;border-radius:20px">Ward
+                  Filter</span></div>
+            </div>
+          </div>
+          <div onclick="window.open('/SOCIAL_MEDIA.html','_blank')"
+            style="flex:0 0 calc(50% - .75rem);min-width:300px;background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 20px 50px rgba(0,0,0,.3);transition:transform .3s"
+            onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform=''">
+            <div
+              style="height:170px;background:linear-gradient(135deg,#1a2535,#1976D2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+              <div style="position:relative;z-index:2;text-align:center">
+                <div style="font-size:2.5rem">📣</div>
+                <div
+                  style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:4px;color:rgba(255,255,255,.7);margin-top:.3rem">
+                  PUBLIC SPACE</div>
+              </div>
+              <div
+                style="position:absolute;top:.8rem;right:.8rem;background:rgba(244,162,97,.9);color:#0B3D91;font-size:.58rem;font-weight:700;letter-spacing:2px;padding:.25rem .6rem;border-radius:20px">
+                NEW</div>
+            </div>
+            <div style="padding:1.3rem 1.5rem 1.5rem">
+              <div
+                style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1565C0;margin-bottom:.3rem">
+                Community Voice</div>
+              <h3
+                style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#0B3D91;margin-bottom:.4rem">
+                Social Media Public Space</h3>
+              <p style="font-size:.78rem;color:#546E7A;line-height:1.6;margin-bottom:.9rem">A civic square for every
+                city. Share updates, amplify petitions.</p>
+              <div style="display:flex;gap:.35rem;flex-wrap:wrap"><span
+                  style="background:rgba(82,183,136,.12);color:#2E7D32;font-size:.58rem;font-weight:600;padding:.18rem .55rem;border-radius:20px">Posts</span><span
+                  style="background:rgba(82,183,136,.12);color:#2E7D32;font-size:.58rem;font-weight:600;padding:.18rem .55rem;border-radius:20px">Reactions</span>
+              </div>
+            </div>
+          </div>
+          <div onclick="window.open('/petition_engine.html','_blank')"
+            style="flex:0 0 calc(50% - .75rem);min-width:300px;background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 20px 50px rgba(0,0,0,.3);transition:transform .3s"
+            onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform=''">
+            <div
+              style="height:170px;background:linear-gradient(135deg,#1a0a0a,#e85d26);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+              <div style="position:relative;z-index:2;text-align:center">
+                <div style="font-size:2.5rem">✍️</div>
+                <div
+                  style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:4px;color:rgba(255,255,255,.7);margin-top:.3rem">
+                  PETITION ENGINE</div>
+              </div>
+              <div
+                style="position:absolute;top:.8rem;right:.8rem;background:rgba(232,93,38,.9);color:#fff;font-size:.58rem;font-weight:700;letter-spacing:2px;padding:.25rem .6rem;border-radius:20px">
+                🔥 ACTIVE</div>
+            </div>
+            <div style="padding:1.3rem 1.5rem 1.5rem">
+              <div
+                style="font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e85d26;margin-bottom:.3rem">
+                Phase 02</div>
+              <h3
+                style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#0B3D91;margin-bottom:.4rem">
+                Petition Engine</h3>
+              <p style="font-size:.78rem;color:#546E7A;line-height:1.6;margin-bottom:.9rem">When authorities ignore
+                deadlines, your report becomes a public petition.</p>
+              <div style="display:flex;gap:.35rem;flex-wrap:wrap"><span
+                  style="background:rgba(232,93,38,.1);color:#e85d26;font-size:.58rem;font-weight:600;padding:.18rem .55rem;border-radius:20px">Countdown</span><span
+                  style="background:rgba(232,93,38,.1);color:#e85d26;font-size:.58rem;font-weight:600;padding:.18rem .55rem;border-radius:20px">Auto-Escalate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:.5rem;margin-top:1.5rem">
+        <span id="sd0" onclick="slGo(0)"
+          style="width:24px;height:6px;border-radius:3px;background:#fff;cursor:pointer;transition:all .3s"></span>
+        <span id="sd1" onclick="slGo(1)"
+          style="width:8px;height:6px;border-radius:3px;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s"></span>
+        <span id="sd2" onclick="slGo(2)"
+          style="width:8px;height:6px;border-radius:3px;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s"></span>
+      </div>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var c = 0, max = 1;
+      function upd() {
+        var t = document.getElementById('slTrack'); if (!t) return;
+        var w = t.children[0] ? t.children[0].getBoundingClientRect().width : 300;
+        t.style.transform = 'translateX(-' + (c * (w + 24)) + 'px)';
+        for (var i = 0; i < 3; i++) { var d = document.getElementById('sd' + i); if (!d) continue; d.style.width = i === c ? '24px' : '8px'; d.style.background = i === c ? '#fff' : 'rgba(255,255,255,.3)'; }
+      }
+      window.slPrev = function () { c = Math.max(0, c - 1); upd(); }
+      window.slNext = function () { c = Math.min(max, c + 1); upd(); }
+      window.slGo = function (i) { c = Math.min(max, i); upd(); }
+      var ti = setInterval(function () { c = c >= max ? 0 : c + 1; upd(); }, 4000);
+      var s = document.getElementById('tools-slider');
+      if (s) { s.onmouseenter = function () { clearInterval(ti); }; s.onmouseleave = function () { ti = setInterval(function () { c = c >= max ? 0 : c + 1; upd(); }, 4000); }; }
+      window.addEventListener('resize', function () { max = window.innerWidth < 768 ? 2 : 1; c = Math.min(c, max); upd(); });
+    })();
+  </script>
+
+
+  <!-- LIVE FEED -->
+  <section class="feed-section" id="feed">
+    <div style="max-width:1100px;margin:0 auto">
+      <span class="sec-tag reveal">Live Activity</span>
+      <h2 class="sec-title reveal d1" style="color:#0B3D91">The city's pulse,<br><em style="color:#1565C0">right
+          now.</em></h2>
+      <div class="feed-grid reveal d2">
+        <div class="feed-card resolved">
+          <div class="feed-status"><span class="feed-dot"></span>Resolved</div>
+          <h4>Pothole — Bandra Reclamation Road</h4>
+          <div class="meta">Mumbai · Ward 51 · 2 hours ago</div>
+          <div class="supporters">🌱 Community adopted · 12 supporters</div>
+        </div>
+        <div class="feed-card petition-fire">
+          <div class="feed-status"><span class="feed-dot"></span>Petition Active</div>
+          <h4>Streetlights Out — Dharavi Main Road</h4>
+          <div class="meta">Mumbai · Ward 18 · 3 days overdue</div>
+          <div class="supporters">189 signatures · Escalated to Collector</div>
+        </div>
+        <div class="feed-card active">
+          <div class="feed-status"><span class="feed-dot"></span>Filed · Under Review</div>
+          <h4>Sewage Overflow — Camp Area</h4>
+          <div class="meta">Amravati · Zone B · Filed today</div>
+          <div class="supporters">📋 Sent to Storm Water Drain Dept · 6 days left</div>
+        </div>
+        <div class="feed-card resolved">
+          <div class="feed-status"><span class="feed-dot"></span>Resolved</div>
+          <h4>Illegal Dumping Cleared — Kurla West</h4>
+          <div class="meta">Mumbai · Ward 39 · Yesterday</div>
+          <div class="supporters">✅ Resolved by Dept in 5 days</div>
+        </div>
+        <div class="feed-card active">
+          <div class="feed-status"><span class="feed-dot"></span>Filed</div>
+          <h4>Broken Footpath — FC Road</h4>
+          <div class="meta">Pune · Shivajinagar · 1 hour ago</div>
+          <div class="supporters">⏱ 14 days remaining for resolution</div>
+        </div>
+        <div class="feed-card petition-fire">
+          <div class="feed-status"><span class="feed-dot"></span>Petition Active</div>
+          <h4>Open Manhole — Salt Lake Sector V</h4>
+          <div class="meta">Kolkata · Ward 29 · 9 days overdue</div>
+          <div class="supporters">412 signatures — URGENT · Media notified</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — Same colour as header (Deep Navy #0B3D91) -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand-row">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <svg class="logo-svg" viewBox="0 0 34 44" fill="none" style="width:28px;height:28px">
+              <path d="M17 2C10.37 2 5 7.37 5 14C5 24.5 17 42 17 42S29 24.5 29 14C29 7.37 23.63 2 17 2Z"
+                fill="#E3F0FF" />
+              <circle cx="17" cy="14" r="7" fill="#0B3D91" />
+              <path d="M8 14 L11 10 L14 17 L17 7 L20 17 L23 10 L26 14" stroke="#f5f1eb" stroke-width="1.4" fill="none"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="nav-brand">Civic <em>Pulse</em></span>
+          </div>
+          <p>Every report is a heartbeat. Built for citizens across every city in India.</p>
+        </div>
+        <div class="footer-nav-grid">
+          <div class="footer-col">
+            <h5>About</h5>
+            <ul>
+              <li><a href="#">Mission</a></li>
+              <li><a href="#">Team</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Research</h5>
+            <ul>
+              <li><a href="#">Survey Data</a></li>
+              <li><a href="#">Reports</a></li>
+              <li><a href="#">Methodology</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Get Involved</h5>
+            <ul>
+              <li><a href="#">Adopt a Problem</a></li>
+              <li><a href="#">Petition Engine</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>For Officials</h5>
+            <ul>
+              <li><a href="#">Request Data</a></li>
+              <li><a href="#">Participate</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Connect</h5>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-bottom">
+        <p>© 2025 Civic Pulse. Built for every Indian city.</p>
+        <span class="footer-langs">हर रिपोर्ट से शहर वापस आपका · প্রতিটি রিপোর্টে · ஒவ்வொரு புகாரிலும்</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAB -->
+  <div class="fab">
+    <button class="fab-btn" onclick="openWizard()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+    </button>
+    <span class="fab-label">Report</span>
+  </div>
+
+  <!-- ═══ LOGIN OVERLAY ═══ -->
+  <div class="overlay" id="loginOv" onclick="ovClick(event,'loginOv')">
+    <div class="sheet sheet-scroll">
+      <div class="sheet-drag"></div>
+      <button class="sheet-close" onclick="closeOv('loginOv')">✕</button>
+      <div class="auth-head">
+        <h2 id="authH">Welcome back</h2>
+        <p id="authP">Sign in to file and track your reports</p>
+      </div>
+      <div class="auth-toggle">
+        <button class="auth-tab active" id="tLogin" onclick="switchTab('login')">Sign in</button>
+        <button class="auth-tab" id="tSignup" onclick="switchTab('signup')">Create account</button>
+      </div>
+
+      <div id="fLogin">
+        <div class="fld"><label>Mobile or Email</label><input type="text" placeholder="+91 98765 43210 or you@email.com"
+            id="lId"></div>
+        <div class="fld"><label>Password</label><input type="password" placeholder="Your password" id="lPass"></div>
+        <button class="btn-full btn-full-sky" onclick="doLogin()">Sign in</button>
+        <div class="divider-or">or</div>
+        <button class="btn-full btn-full-outline goog-btn" onclick="doGoogle()">
+          <svg viewBox="0 0 24 24" width="17" height="17">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          Continue with Google
+        </button>
+        <p class="auth-switch">No account? <a onclick="switchTab('signup')">Sign up free</a></p>
+      </div>
+
+      <div id="fSignup" style="display:none">
+        <span class="utype-head">I am joining as a…</span>
+        <div class="utype-grid">
+          <div class="utype-card" id="ut-gov" onclick="selectUT('gov')">
+            <div class="uico">🏛️</div>
+            <div class="ulbl">Government Employee</div>
+            <div class="udesc">Municipal / state official</div>
+          </div>
+          <div class="utype-card" id="ut-ngo" onclick="selectUT('ngo')">
+            <div class="uico">🏢</div>
+            <div class="ulbl">NGO Organisation</div>
+            <div class="udesc">Registered NGO / trust</div>
+          </div>
+          <div class="utype-card" id="ut-nss" onclick="selectUT('nss')">
+            <div class="uico">🎓</div>
+            <div class="ulbl">NSS Group</div>
+            <div class="udesc">Student volunteer unit</div>
+          </div>
+          <div class="utype-card" id="ut-civ" onclick="selectUT('civ')">
+            <div class="uico">🧑‍🤝‍🧑</div>
+            <div class="ulbl">Normal Civilian</div>
+            <div class="udesc">Individual citizen</div>
+          </div>
+        </div>
+
+        <!-- GOVT FIELDS -->
+        <div id="sf-gov" style="display:none">
+          <div class="fld"><label>Full Name</label><input type="text" placeholder="Rajesh Kumar" id="sg-name"></div>
+          <div class="fld"><label>Email Address <span style="color:#E53935;font-size:.65rem">(must be .gov.in —
+                auto-verified via OTP)</span></label><input type="email" placeholder="rajesh@gov.in" id="sg-email">
+          </div>
+          <div class="fld"><label>Password</label><input type="password" placeholder="Min. 8 characters" id="sg-pass">
+          </div>
+          <div class="fld"><label>Gender, DOB</label><input type="text" placeholder="Male, 15 Aug 1985" id="sg-gd">
+          </div>
+          <div class="fld"><label>Department Name</label>
+            <select id="sg-dept">
+              <option value="">— Select Department —</option>
+              <option>PWD</option>
+              <option>BMC</option>
+              <option>Water Board</option>
+              <option>Solid Waste</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fld"><label>Designation</label><input type="text" placeholder="Ward Officer" id="sg-desg"></div>
+          <div class="fld"><label>Office Location / Zone</label><input type="text" placeholder="Ward 42, Andheri West"
+              id="sg-zone"></div>
+          <div class="fld"><label>Government ID <span style="color:rgba(245,241,235,.3);font-size:.62rem">(dummy for
+                now)</span></label><input type="text" placeholder="GOV-ID-XXXX" id="sg-gid"></div>
+          <div class="fld"><label>Aadhaar or PAN <span style="color:rgba(245,241,235,.3);font-size:.62rem">(masked,
+                DigiLocker — future)</span></label><input type="text" placeholder="XXXX-XXXX-XXXX" id="sg-aadh"></div>
+        </div>
+
+        <!-- NGO FIELDS -->
+        <div id="sf-ngo" style="display:none">
+          <div class="fld"><label>Name of Organisation</label><input type="text" placeholder="Swachh Bharat Foundation"
+              id="sn-org"></div>
+          <div class="fld"><label>Contact Person Name</label><input type="text" placeholder="Priya Mehta" id="sn-cp">
+          </div>
+          <div class="fld"><label>Email Address</label><input type="email" placeholder="contact@org.in" id="sn-email">
+          </div>
+          <div class="fld"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210" id="sn-ph"></div>
+          <div class="fld"><label>Adhar Card</label><input type="text" placeholder="XXXX-XXXX-XXXX" id="sn-adh"></div>
+          <div class="fld"><label>Password</label><input type="password" id="sn-pass"></div>
+          <div class="fld"><label>City of Operation</label><input type="text" placeholder="Mumbai" id="sn-city"></div>
+          <div class="fld"><label>NGO Darpan Registration Number</label><input type="text"
+              placeholder="DRP/MH/XXXX/XXXX" id="sn-drp"></div>
+          <div class="fld"><label>80G / 12A Certificate (PDF upload)</label><input type="file" accept=".pdf"
+              id="sn-cert" style="padding:.5rem;font-size:.78rem"></div>
+          <div class="fld"><label>Website <span
+                style="color:rgba(245,241,235,.3);font-size:.62rem">(optional)</span></label><input type="url"
+              placeholder="https://yourorg.in" id="sn-web"></div>
+          <div class="fld"><label>Team Size</label><input type="number" placeholder="25" id="sn-team"></div>
+          <div class="fld"><label>Brief description of work</label><textarea id="sn-desc"
+              placeholder="We work on sanitation and waste management in suburban Mumbai…"
+              style="width:100%;background:#F4F6F8;border:1px solid rgba(21,101,192,.2);color:#1A237E;padding:.78rem 1rem;font-family:'DM Sans',sans-serif;font-size:.86rem;outline:none;resize:vertical;min-height:80px;transition:border-color .25s"></textarea>
+          </div>
+        </div>
+
+        <!-- NSS FIELDS -->
+        <div id="sf-nss" style="display:none">
+          <div class="fld"><label>Name of Organisation / Unit</label><input type="text"
+              placeholder="NSS Unit, VJTI Mumbai" id="ss-org"></div>
+          <div class="fld"><label>College Name</label><input type="text" placeholder="Veermata Jijabai Tech Institute"
+              id="ss-col"></div>
+          <div class="fld"><label>NSS Unit Number</label><input type="text" placeholder="NSS-MH-042" id="ss-unit"></div>
+          <div class="fld"><label>Coordinator Name</label><input type="text" placeholder="Prof. Anita Sharma"
+              id="ss-coord"></div>
+          <div class="fld"><label>Adhaar Card</label><input type="text" placeholder="XXXX-XXXX-XXXX" id="ss-adh"></div>
+          <div class="fld"><label>Email Address</label><input type="email" id="ss-email"></div>
+          <div class="fld"><label>Phone Number</label><input type="tel" id="ss-ph"></div>
+          <div class="fld"><label>Password</label><input type="password" id="ss-pass"></div>
+          <div class="fld"><label>Gender, DOB</label><input type="text" placeholder="Female, 10 Jan 2003" id="ss-gd">
+          </div>
+          <div class="fld"><label>NSS Unit Certificate from College (PDF upload)</label><input type="file" accept=".pdf"
+              id="ss-cert" style="padding:.5rem;font-size:.78rem"></div>
+          <div class="fld"><label>No. of Volunteers (approx)</label><input type="number" placeholder="120" id="ss-vol">
+          </div>
+        </div>
+
+        <!-- CIVILIAN FIELDS -->
+        <div id="sf-civ" style="display:none">
+          <div class="fld"><label>Full Name</label><input type="text" placeholder="Priya Sharma" id="sc-name"></div>
+          <div class="fld"><label>Email Address</label><input type="email" placeholder="you@email.com" id="sc-email">
+          </div>
+          <div class="fld"><label>Phone Number <span style="color:#E53935;font-size:.65rem">(OTP
+                verification)</span></label><input type="tel" placeholder="+91 98765 43210" id="sc-ph"></div>
+          <div class="fld"><label>Password</label><input type="password" id="sc-pass"></div>
+          <div class="fld"><label>Gender, DOB</label><input type="text" placeholder="Female, 12 Mar 1995" id="sc-gd">
+          </div>
+          <div class="fld"><label>City / District</label><input type="text" placeholder="Mumbai, Maharashtra"
+              id="sc-city"></div>
+          <div class="fld"><label>Aadhaar or PAN <span style="color:rgba(245,241,235,.3);font-size:.62rem">(masked,
+                DigiLocker — future)</span></label><input type="text" placeholder="XXXX-XXXX-XXXX" id="sc-aadh"></div>
+          <div class="fld"><label>Organisation <span style="color:rgba(245,241,235,.3);font-size:.62rem">(optional —
+                searchable dropdown of NGOs/colleges)</span></label><input type="text"
+              placeholder="Search NGO or college…" id="sc-org"></div>
+          <div class="fld"><label>Profile Photo <span
+                style="color:rgba(245,241,235,.3);font-size:.62rem">(optional)</span></label><input type="file"
+              accept="image/*" id="sc-photo" style="padding:.5rem;font-size:.78rem"></div>
+        </div>
+
+        <div id="sf-submit" style="display:none;margin-top:.5rem">
+          <button class="btn-full btn-full-sky" onclick="doSignup()">Create Account →</button>
+          <div class="divider-or">or</div>
+          <button class="btn-full btn-full-outline goog-btn" onclick="doGoogle()">
+            <svg viewBox="0 0 24 24" width="17" height="17">
+              <path fill="#4285F4"
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+              <path fill="#34A853"
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+              <path fill="#FBBC05"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+              <path fill="#EA4335"
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+            </svg>
+            Continue with Google
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ REPORT WIZARD OVERLAY ═══ -->
+  <div class="overlay" id="wizOv" onclick="ovClick(event,'wizOv')">
+    <div class="sheet">
+      <div class="sheet-drag"></div>
+      <button class="sheet-close" onclick="closeOv('wizOv')">✕</button>
+      <div class="wiz-prog">
+        <div class="wstep active" id="ws1">Photo</div>
+        <div class="wstep" id="ws2">Location</div>
+        <div class="wstep" id="ws3">Review</div>
+        <div class="wstep" id="ws4">Letter</div>
+        <div class="wstep" id="ws5">Done</div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="wpanel active" id="wp1">
+        <h2 class="wiz-title">Take a photo of the issue</h2>
+        <p class="wiz-sub">Point your camera at the problem. AI does the rest.</p>
+        <div class="upload-zone" id="upZone">
+          <input type="file" id="fileIn" accept="image/*" capture="environment" onchange="handlePhoto(this)">
+          <div class="upload-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              width="44" height="44">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="M21 15l-5-5L5 21" />
+            </svg>
+          </div>
+          <p><strong>Tap to open camera</strong><br>or drag a photo here</p>
+        </div>
+        <div class="img-preview" id="imgPrev">
+          <img id="prevImg" src="" alt="">
+          <div class="preview-rm" onclick="removePhoto()">✕</div>
+        </div>
+        <div class="ai-bar" id="aiBar">
+          <div class="ai-spin"></div>
+          <p id="aiMsg">Reading your image…</p>
+        </div>
+        <div class="mini-placard" id="miniPlacard">
+          <div class="result-row"><span class="rkey">Issue detected</span><span class="rval hl" id="rIssue">—</span>
+          </div>
+          <div class="result-row"><span class="rkey">Department</span><span class="rval" id="rDept">—</span></div>
+          <div class="result-row"><span class="rkey">Municipal body</span><span class="rval" id="rBody">—</span></div>
+          <div class="result-row"><span class="rkey">Documents needed</span><span class="rval" id="rDocs">—</span></div>
+          <div class="result-row"><span class="rkey">Office address</span><span class="rval" id="rOffice">—</span></div>
+          <div class="result-row"><span class="rkey">Official website</span><span class="rval" id="rWeb">—</span></div>
+          <div class="result-row"><span class="rkey">Deadline</span><span class="rval" id="rDeadline">7 days · then
+              Auto-Petition</span></div>
+        </div>
+        <div class="wiz-nav">
+          <button class="btn-wnext" id="btnN1" onclick="goStep(2)" disabled>Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="wpanel" id="wp2">
+        <h2 class="wiz-title">Confirm your location</h2>
+        <p class="wiz-sub">GPS detected this. Edit if needed.</p>
+        <div class="loc-box">
+          <span class="loc-ico">📍</span>
+          <div class="loc-t">
+            <h4 id="locCity" style="color:rgba(245,241,235,.4)">Detecting via GPS…</h4>
+            <p id="locAddr">Getting precise address</p>
+          </div>
+        </div>
+        <div class="fld"><label>Landmark or extra detail</label><input type="text" id="landmark"
+            placeholder="Near school gate, behind bus stop…"></div>
+        <div class="fld"><label>Your name</label><input type="text" id="cName" placeholder="Priya Sharma"></div>
+        <div class="fld"><label>Mobile number</label><input type="tel" id="cPhone" placeholder="+91 98765 43210"></div>
+        <div class="wiz-nav">
+          <button class="btn-wback" onclick="goStep(1)">← Back</button>
+          <button class="btn-wnext" onclick="goStep(3)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="wpanel" id="wp3">
+        <h2 class="wiz-title">Review before filing</h2>
+        <p class="wiz-sub">This goes to the department.</p>
+        <div class="mini-placard vis" id="reviewCard">
+          <div class="result-row"><span class="rkey">Issue</span><span class="rval hl" id="rv1">—</span></div>
+          <div class="result-row"><span class="rkey">Location</span><span class="rval" id="rv2">—</span></div>
+          <div class="result-row"><span class="rkey">Department</span><span class="rval" id="rv3">—</span></div>
+          <div class="result-row"><span class="rkey">Sent to</span><span class="rval" id="rv4">—</span></div>
+          <div class="result-row"><span class="rkey">Filed by</span><span class="rval" id="rv5">—</span></div>
+          <div class="result-row"><span class="rkey">Deadline</span><span class="rval" style="color:#1565C0">7 days ·
+              auto-petition if ignored</span></div>
+        </div>
+        <div class="wiz-nav">
+          <button class="btn-wback" onclick="goStep(2)">← Back</button>
+          <button class="btn-wnext" onclick="goStep(4)">File this report →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="wpanel" id="wp4">
+        <h2 class="wiz-title">Your complaint letter</h2>
+        <p class="wiz-sub">AI wrote this. Copy it or we'll send it automatically.</p>
+        <div class="letter-box" id="letterBox">Generating…</div>
+        <div class="wiz-nav">
+          <button class="btn-wback btn-wnext"
+            style="flex:1;background:transparent;border:1px solid var(--sky-dim);color:rgba(245,241,235,.45)"
+            onclick="copyLetter()">Copy Letter</button>
+          <button class="btn-wnext" onclick="goStep(5)">Submit & Track →</button>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="wpanel" id="wp5">
+        <div class="success-wrap">
+          <div class="success-ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </div>
+          <h3>Report filed.</h3>
+          <p>Your pulse has been sent across the city.</p>
+          <div class="case-badge" id="caseId">CP-2025-???</div>
+          <p style="color:rgba(245,241,235,.3);font-size:.78rem;margin-top:.4rem">Department has 7 days to act. We'll
+            notify you at every step.</p>
+          <button class="btn-wnext" style="margin-top:1.5rem" onclick="closeOv('wizOv')">Back to city</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LETTER DEMO OVERLAY -->
+  <div class="overlay" id="letterOv" onclick="ovClick(event,'letterOv')">
+    <div class="sheet">
+      <div class="sheet-drag"></div>
+      <button class="sheet-close" onclick="closeOv('letterOv')">✕</button>
+      <h2 class="wiz-title" style="margin-bottom:.3rem">Complaint Letter</h2>
+      <p class="wiz-sub">AI-generated. Ready to send to Solid Waste Management, BMC.</p>
+      <div class="letter-box" id="demoLetter"></div>
+      <button class="btn-wnext" onclick="copyDemoLetter()">📋 Copy Letter</button>
+    </div>
+  </div>
+
+  <!-- ROLE SIGNUP POPUP -->
+  <div class="role-popup-overlay" id="rolePopupOv" onclick="closeRolePopup(event)">
+    <div class="role-popup">
+      <div class="role-popup-head">
+        <div>
+          <h3 id="rolePopupTitle">Government Employee</h3>
+          <p id="rolePopupSub">Municipal / state official</p>
+        </div>
+        <button class="role-popup-close" onclick="closeRolePopupBtn()">✕</button>
+      </div>
+      <div class="role-popup-body">
+
+        <!-- GOV -->
+        <div id="rp-gov" style="display:none">
+          <div class="fld"><label>Full Name</label><input type="text" placeholder="Rajesh Kumar"></div>
+          <div class="fld"><label>Email <span style="color:#E53935;font-size:.62rem">(must be .gov.in — OTP
+                verified)</span></label><input type="email" placeholder="rajesh@gov.in"></div>
+          <div class="fld"><label>Password</label><input type="password" placeholder="Min. 8 characters"></div>
+          <div class="fld"><label>Gender, DOB</label><input type="text" placeholder="Male, 15 Aug 1985"></div>
+          <div class="fld"><label>Department</label><select>
+              <option value="">— Select Department —</option>
+              <option>PWD</option>
+              <option>BMC</option>
+              <option>Water Board</option>
+              <option>Solid Waste</option>
+              <option>Other</option>
+            </select></div>
+          <div class="fld"><label>Designation</label><input type="text" placeholder="Ward Officer"></div>
+          <div class="fld"><label>Office Location / Zone</label><input type="text" placeholder="Ward 42, Andheri West">
+          </div>
+          <div class="fld"><label>Government ID</label><input type="text" placeholder="GOV-ID-XXXX"></div>
+          <div class="fld"><label>Aadhaar or PAN <span style="color:#90A4AE;font-size:.6rem">(masked, DigiLocker —
+                future)</span></label><input type="text" placeholder="XXXX-XXXX-XXXX"></div>
+        </div>
+
+        <!-- NGO -->
+        <div id="rp-ngo" style="display:none">
+          <div class="fld"><label>Name of Organisation</label><input type="text" placeholder="Swachh Bharat Foundation">
+          </div>
+          <div class="fld"><label>Contact Person Name</label><input type="text" placeholder="Priya Mehta"></div>
+          <div class="fld"><label>Email Address</label><input type="email" placeholder="contact@org.in"></div>
+          <div class="fld"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+          <div class="fld"><label>Aadhaar Card</label><input type="text" placeholder="XXXX-XXXX-XXXX"></div>
+          <div class="fld"><label>Password</label><input type="password"></div>
+          <div class="fld"><label>City of Operation</label><input type="text" placeholder="Mumbai"></div>
+          <div class="fld"><label>NGO Darpan Registration No.</label><input type="text" placeholder="DRP/MH/XXXX/XXXX">
+          </div>
+          <div class="fld"><label>80G / 12A Certificate (PDF)</label><input type="file" accept=".pdf"
+              style="padding:.5rem;font-size:.78rem"></div>
+          <div class="fld"><label>Website <span style="color:#90A4AE;font-size:.6rem">(optional)</span></label><input
+              type="url" placeholder="https://yourorg.in"></div>
+          <div class="fld"><label>Team Size</label><input type="number" placeholder="25"></div>
+          <div class="fld"><label>Brief description of work</label><textarea
+              placeholder="We work on sanitation and waste management…"
+              style="width:100%;background:#F4F6F8;border:1.5px solid rgba(21,101,192,.15);color:#1A237E;padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.86rem;outline:none;resize:vertical;min-height:80px;border-radius:8px"></textarea>
+          </div>
+        </div>
+
+        <!-- NSS -->
+        <div id="rp-nss" style="display:none">
+          <div class="fld"><label>Organisation / Unit Name</label><input type="text"
+              placeholder="NSS Unit, VJTI Mumbai"></div>
+          <div class="fld"><label>College Name</label><input type="text" placeholder="Veermata Jijabai Tech Institute">
+          </div>
+          <div class="fld"><label>NSS Unit Number</label><input type="text" placeholder="NSS-MH-042"></div>
+          <div class="fld"><label>Coordinator Name</label><input type="text" placeholder="Prof. Anita Sharma"></div>
+          <div class="fld"><label>Aadhaar Card</label><input type="text" placeholder="XXXX-XXXX-XXXX"></div>
+          <div class="fld"><label>Email Address</label><input type="email"></div>
+          <div class="fld"><label>Phone Number</label><input type="tel"></div>
+          <div class="fld"><label>Password</label><input type="password"></div>
+          <div class="fld"><label>Gender, DOB</label><input type="text" placeholder="Female, 10 Jan 2003"></div>
+          <div class="fld"><label>NSS Unit Certificate (PDF)</label><input type="file" accept=".pdf"
+              style="padding:.5rem;font-size:.78rem"></div>
+          <div class="fld"><label>No. of Volunteers (approx)</label><input type="number" placeholder="120"></div>
+        </div>
+
+        <!-- CIVILIAN -->
+        <div id="rp-civ" style="display:none">
+          <div class="fld"><label>Full Name</label><input type="text" placeholder="Priya Sharma"></div>
+          <div class="fld"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+          <div class="fld"><label>Phone <span style="color:#E53935;font-size:.62rem">(OTP
+                verification)</span></label><input type="tel" placeholder="+91 98765 43210"></div>
+          <div class="fld"><label>Password</label><input type="password"></div>
+          <div class="fld"><label>Gender, DOB</label><input type="text" placeholder="Female, 12 Mar 1995"></div>
+          <div class="fld"><label>City / District</label><input type="text" placeholder="Mumbai, Maharashtra"></div>
+          <div class="fld"><label>Aadhaar or PAN <span style="color:#90A4AE;font-size:.6rem">(masked, DigiLocker —
+                future)</span></label><input type="text" placeholder="XXXX-XXXX-XXXX"></div>
+          <div class="fld"><label>Organisation <span
+                style="color:#90A4AE;font-size:.6rem">(optional)</span></label><input type="text"
+              placeholder="Search NGO or college…"></div>
+          <div class="fld"><label>Profile Photo <span
+                style="color:#90A4AE;font-size:.6rem">(optional)</span></label><input type="file" accept="image/*"
+              style="padding:.5rem;font-size:.78rem"></div>
+        </div>
+
+        <button class="btn-full btn-full-sky" style="margin-top:.8rem;border-radius:10px"
+          onclick="closeRolePopupBtn();joinSubmit()">Create Account →</button>
+        <div class="divider-or">or</div>
+        <button class="btn-full btn-full-outline goog-btn" style="border-radius:10px" onclick="doGoogle()">
+          <svg viewBox="0 0 24 24" width="17" height="17">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          Continue with Google
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ─── HERO CANVAS — illustration: figure painting city light ─────
+    (function () {
+      const c = document.getElementById('hero-canvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+      resize(); window.addEventListener('resize', resize);
+
+      let prog = 0, t = 0;
+
+      const blocks = [
+        { x: -85, w: 22, h: 112, ws: [[3, 22], [3, 48], [3, 74], [3, 98], [13, 22], [13, 48], [13, 74]] },
+        { x: -52, w: 17, h: 80, ws: [[3, 16], [3, 38], [3, 60], [10, 16], [10, 38]] },
+        { x: -26, w: 27, h: 145, ws: [[4, 22], [4, 50], [4, 78], [4, 106], [4, 128], [16, 22], [16, 50], [16, 78], [16, 106]] },
+        { x: 10, w: 19, h: 94, ws: [[3, 18], [3, 44], [3, 70], [11, 18], [11, 44]] },
+        { x: 36, w: 29, h: 165, ws: [[4, 26], [4, 58], [4, 88], [4, 118], [4, 144], [17, 26], [17, 58], [17, 88], [17, 118]] },
+        { x: 73, w: 21, h: 106, ws: [[3, 20], [3, 50], [3, 80], [12, 20], [12, 50]] },
+        { x: 102, w: 15, h: 72, ws: [[3, 14], [3, 36], [8, 14], [8, 36]] },
+      ];
+      const wst = {};
+      blocks.forEach((b, bi) => b.ws.forEach((_, wi) => { wst[bi + '-' + wi] = Math.random() }));
+
+      function draw() {
+        t += 0.013; prog = Math.min(1, prog + 0.0028);
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        // night sky
+        const sg = ctx.createLinearGradient(0, 0, 0, c.height);
+        sg.addColorStop(0, '#08101a'); sg.addColorStop(1, '#13212f');
+        ctx.fillStyle = sg; ctx.fillRect(0, 0, c.width, c.height);
+
+        // stars — static dots only, NO network balls
+        for (let i = 0; i < 52; i++) {
+          const sx = (i * 131.7) % c.width, sy = (i * 73.9) % (c.height * 0.62);
+          ctx.globalAlpha = 0.12 + 0.2 * Math.sin(t * 1.1 + i);
+          ctx.fillStyle = '#f8f5f0';
+          ctx.beginPath(); ctx.arc(sx, sy, 0.75, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        // anchor points — read exact position of the "i" span in the DOM
+        const iEl = document.getElementById('hero-i-dot');
+        const iRect = iEl ? iEl.getBoundingClientRect() : null;
+        const lx = iRect ? iRect.left + iRect.width * 0.5 : 160;
+        const ly = iRect ? iRect.top + iRect.height * 0.18 : 200; // top of letter = dot of i
+        const fx = c.width * 0.36, fy = c.height * 0.87;
+        const px = fx + 108;
+
+        // lamp pole — thin elegant line
+        ctx.strokeStyle = 'rgba(155,155,155,0.18)'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(px, fy + 5);
+        ctx.bezierCurveTo(px + 10, fy - c.height * 0.18, lx + 60, ly + 85, lx, ly + 12);
+        ctx.stroke();
+
+        // lamp head
+        ctx.fillStyle = 'rgba(180,180,180,0.14)';
+        ctx.beginPath(); ctx.ellipse(lx, ly, 15, 6, 0, 0, Math.PI * 2); ctx.fill();
+
+        // point glow at lamp
+        if (prog > 0.04) {
+          const lg = ctx.createRadialGradient(lx, ly, 0, lx, ly, 45 * prog);
+          lg.addColorStop(0, `rgba(244,162,97,${0.72 * prog})`);
+          lg.addColorStop(1, 'rgba(244,162,97,0)');
+          ctx.fillStyle = lg; ctx.beginPath(); ctx.arc(lx, ly, 45 * prog, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // LIGHT CONE
+        if (prog > 0) {
+          const cW = Math.min(c.width * 0.6, 320) * prog;
+          const cH = (fy - ly - c.height * 0.08) * prog;
+          ctx.save(); ctx.translate(lx, ly + 8);
+
+          // outer glow
+          const og = ctx.createLinearGradient(0, 0, 0, cH);
+          og.addColorStop(0, `rgba(244,162,97,${0.15 * prog})`);
+          og.addColorStop(0.5, `rgba(219,208,190,${0.08 * prog})`);
+          og.addColorStop(1, 'rgba(219,208,190,0)');
+          ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-cW * 0.58, cH); ctx.lineTo(cW * 0.58, cH); ctx.closePath();
+          ctx.fillStyle = og; ctx.fill();
+
+          // bright inner
+          const ig = ctx.createLinearGradient(0, 0, 0, cH * 0.7);
+          ig.addColorStop(0, `rgba(244,162,97,${0.65 * prog})`);
+          ig.addColorStop(0.55, `rgba(219,208,190,${0.28 * prog})`);
+          ig.addColorStop(1, 'rgba(219,208,190,0)');
+          ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-cW * 0.37, cH * 0.7); ctx.lineTo(cW * 0.37, cH * 0.7); ctx.closePath();
+          ctx.fillStyle = ig; ctx.fill();
+
+          // city blocks
+          if (prog > 0.22) {
+            const cp = Math.min(1, (prog - 0.22) / 0.78);
+            const sc = cW / 220;
+            ctx.save();
+            ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-cW * 0.58, cH); ctx.lineTo(cW * 0.58, cH); ctx.closePath(); ctx.clip();
+            blocks.forEach((b, bi) => {
+              const bp = Math.min(1, Math.max(0, (cp - bi * 0.055) / 0.72));
+              if (bp <= 0) return;
+              const bx = b.x * sc, bw = b.w * sc, bh = b.h * bp * sc, by = cH - bh;
+              ctx.fillStyle = `rgba(8,16,24,${0.9 * bp})`; ctx.fillRect(bx - bw / 2, by, bw, bh);
+              ctx.fillStyle = `rgba(20,34,48,${0.6 * bp})`; ctx.fillRect(bx - bw / 2 + 1, by, bw - 2, 3);
+              if (bp > 0.42) {
+                b.ws.forEach((w, wi) => {
+                  const k = bi + '-' + wi;
+                  wst[k] += 0.007 * (Math.random() - 0.32); wst[k] = Math.max(0, Math.min(1, wst[k]));
+                  const wa = wst[k] * bp * 0.86; if (wa < 0.05) return;
+                  const wx = bx - bw / 2 + w[0] * sc, wy = by + w[1] * sc;
+                  const wg = ctx.createRadialGradient(wx + 2, wy + 2, 0, wx + 2, wy + 2, 9 * sc);
+                  wg.addColorStop(0, `rgba(244,162,97,${wa * 0.44})`); wg.addColorStop(1, 'rgba(244,162,97,0)');
+                  ctx.fillStyle = wg; ctx.fillRect(wx - 5, wy - 5, 14 * sc, 14 * sc);
+                  ctx.fillStyle = `rgba(244,162,97,${wa})`; ctx.fillRect(wx, wy, 4 * sc, 4 * sc);
+                });
+              }
+            });
+            ctx.restore();
+          }
+          ctx.restore();
+        }
+
+        // ground
+        const gg = ctx.createLinearGradient(0, c.height * 0.84, 0, c.height);
+        gg.addColorStop(0, 'rgba(16,28,40,0.94)'); gg.addColorStop(1, 'rgba(8,14,22,1)');
+        ctx.fillStyle = gg;
+        ctx.beginPath(); ctx.moveTo(0, c.height * 0.87);
+        ctx.bezierCurveTo(c.width * 0.28, c.height * 0.855, c.width * 0.72, c.height * 0.875, c.width, c.height * 0.855);
+        ctx.lineTo(c.width, c.height); ctx.lineTo(0, c.height); ctx.closePath(); ctx.fill();
+
+        // FIGURE — stark black silhouette
+        const fc = '#06101a';
+        ctx.fillStyle = fc;
+        ctx.beginPath(); ctx.ellipse(fx, fy - 19, 10, 22, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(fx + 3, fy - 45, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = fc; ctx.lineWidth = 9; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(fx - 3, fy + 3); ctx.lineTo(fx - 7, fy + 28); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(fx + 4, fy + 3); ctx.lineTo(fx + 8, fy + 28); ctx.stroke();
+        ctx.lineWidth = 7;
+        ctx.beginPath(); ctx.moveTo(fx + 9, fy - 28); ctx.lineTo(fx + 42, fy - 85); ctx.stroke();
+        // roller
+        ctx.fillStyle = 'rgba(109,143,163,0.6)';
+        ctx.beginPath(); ctx.rect(fx + 34, fy - 95, 20, 7); ctx.fill();
+        ctx.strokeStyle = 'rgba(109,143,163,0.4)'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(fx + 44, fy - 88); ctx.lineTo(fx + 44, fy - 58); ctx.stroke();
+        // orange paint drip from roller tip
+        if (prog > 0.08) {
+          const pA = Math.min(1, prog * 1.9);
+          ctx.fillStyle = `rgba(244,162,97,${pA * 0.8})`;
+          ctx.beginPath(); ctx.arc(fx + 44, fy - 57, 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = `rgba(244,162,97,${pA * 0.38})`; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(fx + 43, fy - 56); ctx.quadraticCurveTo(fx + 41, fy - 44, fx + 42, fy - 37); ctx.stroke();
+        }
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // ─── TYPEWRITER ─────────────────────────────────────────────
+    const phrases = ['Reclaim Your City, One Report at a Time.', 'हर रिपोर्ट से शहर वापस आपका।', 'প্রতিটি রিপোর্টে শহর ফিরে আপনার।', 'ஒவ்வொரு புகாரிலும் நகரம் மீண்டும் உங்கள்.', 'ప్రతి ఫిర్యాదుతో నగరం మళ్లీ మీది.', 'प्रत्येक तक्रारीने शहर पुन्हा आपले.'];
+    let pi = 0, ci = 0, del = false;
+    const tw = document.getElementById('tw');
+    function type() {
+      const cur = phrases[pi];
+      if (!del) { tw.textContent = cur.slice(0, ++ci); if (ci === cur.length) { del = true; setTimeout(type, 2400); return; } setTimeout(type, 60); }
+      else { tw.textContent = cur.slice(0, --ci); if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; setTimeout(type, 350); return; } setTimeout(type, 30); }
+    }
+    type();
+
+    // ─── PETITION TIMER ──────────────────────────────────────────
+    let tsec = 7 * 3600 + 14 * 60 + 32;
+    setInterval(() => {
+      tsec = Math.max(0, tsec + 1);// counting UP (overdue)
+      const h = String(Math.floor(tsec / 3600)).padStart(2, '0');
+      const m = String(Math.floor((tsec % 3600) / 60)).padStart(2, '0');
+      const s = String(tsec % 60).padStart(2, '0');
+      const el = document.getElementById('petTimer');
+      if (el) el.textContent = `${h}:${m}:${s}`;
+      const ct = document.getElementById('cornerTimer');
+      if (ct) ct.textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
+    // ─── SUPPORTER ───────────────────────────────────────────────
+    let suppN = 243;
+    function addSupporter() {
+      suppN++;
+      const pile = document.getElementById('suppPile');
+      const av = document.createElement('div');
+      av.className = 'supporter-avatar';
+      av.style.background = `hsl(${Math.floor(Math.random() * 60) + 180},35%,55%)`;
+      av.textContent = ['🧑', '👩', '👨', '🧕', '👴', '👦', '👧'][Math.floor(Math.random() * 7)];
+      pile.insertBefore(av, pile.querySelector('.supporter-count'));
+      document.getElementById('suppCount').textContent = `+${suppN - 5} supporters`;
+      document.getElementById('suppBtn').innerHTML = `🔥 Support This Petition (${suppN})`;
+    }
+
+    // ─── SCROLL REVEAL ───────────────────────────────────────────
+    const obs = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { en.target.classList.add('up'); } }) }, { threshold: .1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // ─── OVERLAY HELPERS ─────────────────────────────────────────
+    function openOv(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden' }
+    function closeOv(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = '' }
+    function ovClick(e, id) { if (e.target === document.getElementById(id)) closeOv(id) }
+
+    // ─── AUTH ────────────────────────────────────────────────────
+    function openLogin(tab) { openOv('loginOv'); switchTab(tab) }
+    function switchTab(t) {
+      const isL = t === 'login';
+      document.getElementById('tLogin').classList.toggle('active', isL);
+      document.getElementById('tSignup').classList.toggle('active', !isL);
+      document.getElementById('fLogin').style.display = isL ? '' : 'none';
+      document.getElementById('fSignup').style.display = isL ? 'none' : '';
+      document.getElementById('authH').textContent = isL ? 'Welcome back' : 'Join the movement';
+      document.getElementById('authP').textContent = isL ? 'Sign in to file and track your reports' : 'Create your free account';
+    }
+    async function doLogin() {
+      const email = document.getElementById('lId').value.trim();
+      const pw = document.getElementById('lPass').value;
+      if (!email || !pw) { toast('Enter email and password.'); return; }
+      try {
+        const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ email, password: pw }) });
+        const data = await res.json();
+        if (data.error) { toast(data.error); return; }
+        closeOv('loginOv'); toast('Welcome back, ' + data.user.name + '!');
+        window.currentUser = data.user;
+      } catch (e) { toast('Login failed.'); }
+    }
+    async function doSignup() {
+      const name = document.getElementById('sc-name')?.value || document.getElementById('sg-name')?.value || '';
+      const email = document.getElementById('sc-email')?.value || document.getElementById('sg-email')?.value || '';
+      const pw = document.getElementById('sc-pass')?.value || document.getElementById('sg-pass')?.value || '';
+      const phone = document.getElementById('sc-ph')?.value || '';
+      const city = document.getElementById('sc-city')?.value || '';
+      if (!name || !email || !pw) { toast('Please fill all required fields.'); return; }
+      try {
+        const res = await fetch('/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ name, email, password: pw, phone, user_type: window._ut || 'civilian', city }) });
+        const data = await res.json();
+        if (data.error) { toast(data.error); return; }
+        closeOv('loginOv'); toast('Welcome, ' + name + '!');
+      } catch (e) { toast('Signup failed.'); }
+    }
+
+    let _ut = null;
+    function selectUT(t) {
+      _ut = t;
+      ['gov', 'ngo', 'nss', 'civ'].forEach(k => {
+        document.getElementById('ut-' + k).classList.toggle('sel', k === t);
+        document.getElementById('sf-' + k).style.display = k === t ? 'block' : 'none';
+      });
+      document.getElementById('sf-submit').style.display = 'block';
+    }
+    function doGoogle() { toast('Connect Google OAuth in your Flask backend.'); }
+
+    // ─── WIZARD ──────────────────────────────────────────────────
+    let aiResult = null;
+    let loc = { city: '', address: '', lat: '', lng: '' };
+
+    function openWizard() { openOv('wizOv'); goStep(1); doDetectLoc(); }
+
+    function goStep(n) {
+      if (n === 3) fillReview();
+      if (n === 4) makeLetter();
+      if (n === 5) fileReport();
+      document.querySelectorAll('.wpanel').forEach(p => p.classList.remove('active'));
+      document.getElementById('wp' + n).classList.add('active');
+      document.querySelectorAll('.wstep').forEach((s, i) => {
+        s.classList.remove('active', 'done');
+        if (i + 1 < n) s.classList.add('done');
+        if (i + 1 === n) s.classList.add('active');
+      });
+    }
+
+    function handlePhoto(input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('prevImg').src = e.target.result;
+        document.getElementById('imgPrev').style.display = 'block';
+        document.getElementById('upZone').style.display = 'none';
+        runAI(file);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removePhoto() {
+      document.getElementById('prevImg').src = '';
+      document.getElementById('imgPrev').style.display = 'none';
+      document.getElementById('upZone').style.display = 'block';
+      document.getElementById('miniPlacard').classList.remove('vis');
+      document.getElementById('aiBar').classList.remove('vis');
+      document.getElementById('btnN1').disabled = true;
+      document.getElementById('fileIn').value = '';
+      aiResult = null;
+    }
+
+    async function runAI(file) {
+      const bar = document.getElementById('aiBar');
+      const msg = document.getElementById('aiMsg');
+      bar.classList.add('vis');
+      msg.textContent = 'Sending to Gemini AI...';
+      const form = new FormData();
+      if (file) form.append('image', file);
+      form.append('lat', loc.lat || '');
+      form.append('lng', loc.lng || '');
+      form.append('city', loc.city || '');
+      form.append('location', document.getElementById('landmark')?.value || '');
+      try {
+        msg.textContent = 'AI is analysing...';
+        const res = await fetch('/api/reports/analyze', { method: 'POST', body: form, credentials: 'include' });
+        const data = await res.json();
+        if (data && data.analysis) { aiResult = data.analysis; showResult(aiResult); }
+        else showResult(null);
+      } catch (e) { console.log(e); showResult(null); }
+    }
+
+    function showResult(r) {
+      if (!r) { document.getElementById('aiBar').classList.remove('vis'); toast('Could not read image. Please try again.'); return; }
+      aiResult = r;
+      const d = r.department || {};
+      document.getElementById('rIssue').textContent = r.issue_type || '—';
+      document.getElementById('rDept').textContent = d.name || '—';
+      document.getElementById('rBody').textContent = d.parent_body || '—';
+      document.getElementById('rDocs').textContent = (r.documents_required || []).join(' · ');
+      document.getElementById('rOffice').textContent = d.office_address || '—';
+      document.getElementById('rWeb').innerHTML = d.website ? `<a href="https://${d.website}" target="_blank">${d.website} ↗</a>` : '—';
+      document.getElementById('rDeadline').textContent = (r.resolution_deadline_days || 7) + ' days · then Auto-Petition';
+      document.getElementById('aiBar').classList.remove('vis');
+      document.getElementById('miniPlacard').classList.add('vis');
+      document.getElementById('btnN1').disabled = false;
+    }
+
+    // ─── LOCATION ────────────────────────────────────────────────
+    function doDetectLoc() {
+      if (!navigator.geolocation) { loc = { city: 'Location unavailable', address: 'Please enter below', lat: '', lng: '' }; updateLocUI(); return; }
+      navigator.geolocation.getCurrentPosition(pos => {
+        loc.lat = pos.coords.latitude.toFixed(5);
+        loc.lng = pos.coords.longitude.toFixed(5);
+        // Real: reverse geocode → fetch(`/api/geocode?lat=${loc.lat}&lng=${loc.lng}`)
+        // Demo:
+        loc.city = 'Mumbai, Maharashtra';
+        loc.address = `${loc.lat}° N, ${loc.lng}° E`;
+        updateLocUI();
+      }, () => {
+        loc = { city: 'Could not detect', address: 'Please type your address in landmark field', lat: '', lng: '' };
+        updateLocUI();
+      }, { timeout: 8000 });
+    }
+    function updateLocUI() {
+      const el = document.getElementById('locCity');
+      el.textContent = loc.city;
+      el.style.color = '';
+      document.getElementById('locAddr').textContent = loc.address;
+    }
+
+    // ─── REVIEW ──────────────────────────────────────────────────
+    function fillReview() {
+      const d = aiResult?.department || {};
+      const lm = document.getElementById('landmark').value;
+      document.getElementById('rv1').textContent = aiResult?.issue_type || '—';
+      document.getElementById('rv2').textContent = loc.city + (lm ? ', ' + lm : '');
+      document.getElementById('rv3').textContent = d.name || '—';
+      document.getElementById('rv4').textContent = d.parent_body || '—';
+      document.getElementById('rv5').textContent = document.getElementById('cName').value || 'Anonymous citizen';
+    }
+
+    // ─── LETTER ──────────────────────────────────────────────────
+    function makeLetter() {
+      const d = aiResult?.department || {};
+      const name = document.getElementById('cName').value || '[Your Name]';
+      const phone = document.getElementById('cPhone').value || '';
+      const lm = document.getElementById('landmark').value;
+      const city = loc.city || '[City]';
+      const today = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+      const caseNo = 'CP-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+      const letter = `To,
+The ${d.nodal_officer || 'Concerned Officer'},
+${d.name || 'Municipal Department'},
+${d.parent_body || 'Municipal Corporation'},
+${d.office_address || ''}
+
+Subject: Formal Complaint — ${aiResult?.issue_type || 'Civic Issue'} at ${city}${lm ? ', near ' + lm : ''}
+
+Respected Sir / Madam,
+
+I, ${name}, am writing to formally bring to your attention a civic infrastructure issue that requires immediate intervention from your department.
+
+Issue Identified: ${aiResult?.issue_type || 'Civic problem'}
+Location: ${city}${lm ? ', near ' + lm : ''}
+Date Observed: ${today}
+Case Reference: ${caseNo}
+
+This situation poses a direct risk to public safety and hygiene and requires urgent resolution. I request your department to dispatch a team to assess and resolve this matter at the earliest.
+
+Documents enclosed: ${(aiResult?.documents_required || []).join(', ')}.
+
+I respectfully request resolution within ${aiResult?.resolution_deadline_days || 7} working days as mandated. In the absence of action within this period, I will be compelled to escalate this matter to the District Collector and the State Urban Development Department, and make this case public via Civic Pulse.
+
+Thanking you,
+
+${name}
+${phone}
+Date: ${today}
+
+Filed via Civic Pulse · civicpulse.in · Case: ${caseNo}`;
+
+      document.getElementById('letterBox').textContent = letter;
+      document.getElementById('caseId').textContent = caseNo;
+    }
+
+    function copyLetter() {
+      navigator.clipboard.writeText(document.getElementById('letterBox').textContent)
+        .then(() => toast('Letter copied!')).catch(() => toast('Select text to copy manually.'));
+    }
+
+    async function fileReport() {
+      const lm = document.getElementById('landmark')?.value || '';
+      const name = document.getElementById('cName')?.value || '';
+      const phone = document.getElementById('cPhone')?.value || '';
+      try {
+        const res = await fetch('/api/reports/submit', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
+          body: JSON.stringify({ ai_result: aiResult || {}, location: loc.city + (lm ? ', ' + lm : ''), city: loc.city, lat: loc.lat, lng: loc.lng, photo_path: aiResult?.photo_path || '' })
+        });
+        const data = await res.json();
+        if (data && data.case_id) {
+          document.getElementById('caseId').textContent = data.case_id;
+        }
+      } catch (e) { console.log(e); }
+    }
+
+    // ─── DEMO LETTER MODAL ───────────────────────────────────────
+    function generateLetter() {
+      const letter = `To,
+The Deputy Commissioner,
+Solid Waste Management Department,
+Brihanmumbai Municipal Corporation (BMC),
+Mahapalika Marg, CST Area, Mumbai — 400001
+
+Subject: Complaint — Overflowing Garbage Pile, Andheri West, Ward 42
+
+Respected Sir/Madam,
+
+I am writing to formally bring to your notice an overflowing garbage pile at Andheri West, Ward 42, Mumbai, identified on ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}.
+
+The accumulation poses a public health hazard and requires immediate collection and disposal. I request your department to act within 7 working days.
+
+If unresolved, I reserve the right to escalate to the Municipal Commissioner and State authorities.
+
+Thanking you,
+[Citizen Name]
+[Contact Details]
+Case ID: CP-2025-DEMO01
+
+Filed via Civic Pulse · civicpulse.in`;
+      document.getElementById('demoLetter').textContent = letter;
+      openOv('letterOv');
+    }
+
+    function showLetterDemo() {
+      generateLetter();
+    }
+
+    function copyDemoLetter() {
+      navigator.clipboard.writeText(document.getElementById('demoLetter').textContent)
+        .then(() => toast('Letter copied!')).catch(() => toast('Select text manually.'));
+    }
+
+    // ─── TOAST ───────────────────────────────────────────────────
+    // ── HERO CARD TAB SWITCH ──
+    function heroTabSwitch(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('hPanel-login').style.display = isLogin ? 'block' : 'none';
+      document.getElementById('hPanel-signup').style.display = isLogin ? 'none' : 'block';
+      const tl = document.getElementById('hTab-login');
+      const ts = document.getElementById('hTab-signup');
+      if (isLogin) {
+        tl.style.background = '#1565C0'; tl.style.color = '#fff';
+        ts.style.background = '#fff'; ts.style.color = '#546E7A';
+      } else {
+        ts.style.background = '#1565C0'; ts.style.color = '#fff';
+        tl.style.background = '#fff'; tl.style.color = '#546E7A';
+      }
+    }
+    // ── ROLE POPUP ──
+    const roleLabels = {
+      gov: ['Government Employee', 'Municipal / state official'],
+      ngo: ['NGO Organisation', 'Registered NGO / trust'],
+      nss: ['NSS Group', 'Student volunteer unit'],
+      civ: ['Normal Civilian', 'Individual citizen']
+    };
+    function selectHeroUT(type) {
+      // highlight card
+      ['gov', 'ngo', 'nss', 'civ'].forEach(t => {
+        const card = document.getElementById('hut-' + t);
+        if (card) card.classList.toggle('sel', t === type);
+      });
+      // open big popup
+      document.getElementById('rolePopupTitle').textContent = roleLabels[type][0];
+      document.getElementById('rolePopupSub').textContent = roleLabels[type][1];
+      ['gov', 'ngo', 'nss', 'civ'].forEach(t => {
+        const f = document.getElementById('rp-' + t);
+        if (f) f.style.display = t === type ? 'block' : 'none';
+      });
+      document.getElementById('rolePopupOv').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRolePopup(e) {
+      if (e.target === document.getElementById('rolePopupOv')) closeRolePopupBtn();
+    }
+    function closeRolePopupBtn() {
+      document.getElementById('rolePopupOv').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ── JOIN ROLE SELECTION ──
+    function selectRole(el) {
+      document.querySelectorAll('.join-role-card').forEach(c => c.classList.remove('sel'));
+      el.classList.add('sel');
+    }
+    function joinSubmit() {
+      toast('Welcome to the movement! 🚀 Check your email to confirm.');
+    }
+
+    // ── ANIMATED STATS COUNTERS ──
+    function animateCounter(el, target, suffix, duration) {
+      let start = 0; const step = target / 60;
+      const t = setInterval(() => {
+        start += step;
+        if (start >= target) { start = target; clearInterval(t); }
+        el.textContent = (target >= 1000 ? (start / 1000).toFixed(1) + 'K' : Math.floor(start)) + (suffix || '');
+      }, duration / 60);
+    }
+    (function initStats() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animateCounter(document.getElementById('stat-cities'), 247, '', 1200);
+            animateCounter(document.getElementById('stat-filed'), 18400, '', 1600);
+            animateCounter(document.getElementById('stat-resolved'), 9100, '', 1800);
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      const bar = document.querySelector('.hero-stats-bar');
+      if (bar) io.observe(bar);
+    })();
+
+    function toast(msg) {
+      const t = document.createElement('div');
+      t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1565C0;color:#FFFFFF;padding:.65rem 1.3rem;font-size:.8rem;font-weight:600;z-index:9999;letter-spacing:.5px;box-shadow:0 8px 24px rgba(0,0,0,.3);opacity:0;transition:opacity .3s;white-space:nowrap;border-radius:2px';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      requestAnimationFrame(() => { t.style.opacity = '1'; setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 350); }, 2800); });
+    }
+  </script>
+
+  <!-- ═══ GSAP + ADVANCED ANIMATIONS ═══ -->
+  <script>
+    // ── Wait for GSAP to load ──
+    window.addEventListener('load', () => {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── 1. HERO: Cinematic title stagger entrance ──
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
+        // Split into words manually for broad compatibility
+        const words = heroTitle.innerHTML.split(/(<[^>]*>|[^<\s]+)/g).filter(Boolean);
+        gsap.from('.hero-title', {
+          y: 60, opacity: 0, duration: 1.2,
+          ease: 'power4.out', delay: 0.3
+        });
+      }
+      gsap.from('.hero-eyebrow', { y: 20, opacity: 0, duration: .8, ease: 'power3.out', delay: .1 });
+      gsap.from('.tw-wrap', { y: 15, opacity: 0, duration: .8, ease: 'power3.out', delay: .6 });
+      gsap.from('.hero-btns', { y: 20, opacity: 0, duration: .8, ease: 'power3.out', delay: .8 });
+
+      // ── 2. PHASE 1: detective board cinematic reveal ──
+      gsap.from('.detective-board', {
+        scrollTrigger: { trigger: '.detective-board', start: 'top 80%' },
+        y: 60, opacity: 0, rotation: -1,
+        duration: 1.1, ease: 'power3.out'
+      });
+
+      // grid info items stagger
+      gsap.from('.info-item', {
+        scrollTrigger: { trigger: '.board-info-grid', start: 'top 85%' },
+        y: 20, opacity: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out'
+      });
+
+      // generate-letter-btn pulse after reveal
+      gsap.from('.generate-letter-btn', {
+        scrollTrigger: { trigger: '.generate-letter-btn', start: 'top 90%' },
+        scaleX: 0.85, opacity: 0, duration: 0.7, ease: 'back.out(1.7)'
+      });
+
+      // fire-card: CSS only
+
+      // ── 5. Feed cards — stagger up ──
+      gsap.from('.feed-card', {
+        scrollTrigger: { trigger: '.feed-grid', start: 'top 80%' },
+        y: 35, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out'
+      });
+
+      // ── 6. Footer nav columns — cascade ──
+      gsap.from('.footer-col', {
+        scrollTrigger: { trigger: 'footer', start: 'top 90%' },
+        y: 20, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out'
+      });
+
+      // ── 7. Section tags float in ──
+      gsap.utils.toArray('.sec-tag').forEach(el => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 88%' },
+          x: -20, opacity: 0, duration: 0.6, ease: 'power2.out'
+        });
+      });
+
+      // ── 8. Adopt ribbon — split reveal ──
+      gsap.from('.before-visual', {
+        scrollTrigger: { trigger: '.ribbon-cut-demo', start: 'top 80%' },
+        x: -30, opacity: 0, duration: 0.8, ease: 'power2.out'
+      });
+      gsap.from('.after-visual', {
+        scrollTrigger: { trigger: '.ribbon-cut-demo', start: 'top 80%' },
+        x: 30, opacity: 0, duration: 0.8, delay: 0.15, ease: 'power2.out'
+      });
+
+      // ── 9. Adopt stats counter animation ──
+      gsap.from('.adopt-stats-grid .info-item', {
+        scrollTrigger: { trigger: '.adopt-stats-grid', start: 'top 85%' },
+        y: 20, opacity: 0, stagger: 0.12, duration: 0.6, ease: 'back.out(1.4)'
+      });
+
+      // ── 10. Magnetic CTA button effect ──
+      const ctaBtn = document.querySelector('.btn-cta');
+      if (ctaBtn) {
+        ctaBtn.addEventListener('mousemove', e => {
+          const r = ctaBtn.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          gsap.to(ctaBtn, { x: x * 0.18, y: y * 0.18, duration: 0.3, ease: 'power2.out' });
+        });
+        ctaBtn.addEventListener('mouseleave', () => {
+          gsap.to(ctaBtn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+        });
+      }
+    });
+
+    // ── NOISE PARTICLE OVERLAY on hero canvas (subtle grain feel) ──
+    (function addHeroGrain() {
+      const grain = document.createElement('canvas');
+      grain.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:3;opacity:.035;pointer-events:none;mix-blend-mode:screen;';
+      document.querySelector('.hero').appendChild(grain);
+      const gc = grain.getContext('2d');
+      function resizeGrain() { grain.width = window.innerWidth; grain.height = window.innerHeight; }
+      resizeGrain();
+      window.addEventListener('resize', resizeGrain);
+      function drawGrain() {
+        const id = gc.createImageData(grain.width, grain.height);
+        const d = id.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const v = Math.random() * 255;
+          d[i] = d[i + 1] = d[i + 2] = v;
+          d[i + 3] = 255;
+        }
+        gc.putImageData(id, 0, 0);
+        setTimeout(() => requestAnimationFrame(drawGrain), 80);
+      }
+      drawGrain();
+    })();
+
+    // ── FLOATING PARTICLES — subtle dots on dark sections ──
+    (function addParticles() {
+      const sections = [document.querySelector('.petition-section'), document.querySelector('.feed-section')];
+      sections.forEach(sec => {
+        if (!sec) return;
+        const pCanvas = document.createElement('canvas');
+        pCanvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.4';
+        sec.style.position = 'relative';
+        sec.insertBefore(pCanvas, sec.firstChild);
+        const ctx2 = pCanvas.getContext('2d');
+        pCanvas.width = sec.offsetWidth; pCanvas.height = sec.offsetHeight;
+        const pts = Array.from({ length: 28 }, () => ({
+          x: Math.random() * pCanvas.width,
+          y: Math.random() * pCanvas.height,
+          r: Math.random() * 1.5 + 0.5,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          a: Math.random()
+        }));
+        function animPts() {
+          ctx2.clearRect(0, 0, pCanvas.width, pCanvas.height);
+          pts.forEach(p => {
+            p.x += p.vx; p.y += p.vy; p.a += 0.008;
+            if (p.x < 0 || p.x > pCanvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > pCanvas.height) p.vy *= -1;
+            ctx2.beginPath();
+            ctx2.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx2.fillStyle = `rgba(21,101,192,${0.2 + 0.15 * Math.sin(p.a)})`;
+            ctx2.fill();
+          });
+          requestAnimationFrame(animPts);
+        }
+        animPts();
+      });
+    })();
+
+    // ── DETECTIVE BOARD HOVER 3D TILT ──
+    const detectiveBoard = document.querySelector('.detective-board');
+    if (detectiveBoard && typeof gsap !== 'undefined') {
+      detectiveBoard.addEventListener('mousemove', e => {
+        const r = detectiveBoard.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(detectiveBoard, {
+          rotateY: x * 6, rotateX: -y * 4,
+          transformPerspective: 1200,
+          ease: 'power2.out', duration: 0.4
+        });
+      });
+      detectiveBoard.addEventListener('mouseleave', () => {
+        gsap.to(detectiveBoard, { rotateY: 0, rotateX: 0, duration: 0.7, ease: 'elastic.out(1,0.6)' });
+      });
+    }
+
+    // ── NAV scroll behaviour — slim on scroll ──
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.height = '54px';
+        nav.style.background = '#0A2E6E';
+      } else {
+        nav.style.height = '64px';
+        nav.style.background = '#0B3D91';
+      }
+    }, { passive: true });
+  </script>
+  <script src="/static/js/api.js"></script>
+</body>
+
+</html>
