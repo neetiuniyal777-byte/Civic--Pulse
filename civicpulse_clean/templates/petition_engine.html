@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Civic Pulse · कार्यालय ज्ञाप · OFFICE MEMORANDUM · PETITION WING</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cutive+Mono&family=Architects+Daughter&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --govt-paper: #f2e8d5;
+      --govt-ink: #2c3e50;
+      --govt-red: #b22234;
+      --govt-blue: #003366;
+      --govt-green: #2e7d32;
+      --govt-gold: #c5a028;
+      --govt-border: #8b4513;
+      --govt-stamp-red: #8b0000;
+      --govt-stamp-blue: #1e3a5f;
+      --coffee-light: rgba(139, 69, 19, 0.08);
+      --coffee-dark: rgba(139, 69, 19, 0.15);
+      --sepia-overlay: rgba(210, 180, 140, 0.2);
+    }
+
+    body {
+      background-color: var(--govt-paper);
+      background-image: 
+        repeating-linear-gradient(45deg, var(--coffee-light) 0px, var(--coffee-light) 2px, transparent 2px, transparent 8px),
+        linear-gradient(135deg, #f2e8d5 0%, #e8d9c0 100%);
+      font-family: 'Cutive Mono', 'Special Elite', monospace;
+      color: var(--govt-ink);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* paper texture overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.08 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.4"/></svg>');
+      pointer-events: none;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    /* header — government style */
+    .govt-header {
+      background: var(--govt-blue);
+      border-bottom: 4px solid var(--govt-gold);
+      padding: 1.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 4px 0 var(--govt-red);
+      z-index: 10;
+    }
+
+    .govt-header::after {
+      content: "भारत सरकार · GOVERNMENT OF INDIA · पेटीशन शाखा";
+      position: absolute;
+      bottom: -10px;
+      right: 3rem;
+      background: var(--govt-paper);
+      color: var(--govt-red);
+      font-size: 0.65rem;
+      padding: 0.2rem 1.5rem;
+      border: 1px solid var(--govt-border);
+      font-family: 'Special Elite', cursive;
+      letter-spacing: 1px;
+    }
+
+    .header-brand {
+      font-family: 'Special Elite', cursive;
+      font-size: 1.6rem;
+      color: var(--govt-gold);
+      letter-spacing: 3px;
+    }
+
+    .header-brand span {
+      color: white;
+      background: var(--govt-red);
+      padding: 0.2rem 0.6rem;
+      margin-left: 0.5rem;
+      border: 1px solid var(--govt-gold);
+      font-size: 1rem;
+    }
+
+    .header-links a {
+      color: rgba(255,255,255,0.7);
+      font-family: 'Special Elite', cursive;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border: 1px dashed var(--govt-gold);
+      padding: 0.4rem 1rem;
+      transition: all 0.3s;
+    }
+
+    .header-links a:hover {
+      background: var(--govt-red);
+      color: white;
+      border: 1px solid white;
+    }
+
+    /* office memorandum hero */
+    .memorandum-hero {
+      background: linear-gradient(135deg, var(--govt-blue) 0%, #1a4466 100%);
+      padding: 3rem 3rem;
+      border-bottom: 4px solid var(--govt-gold);
+      text-align: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .memorandum-hero::before {
+      content: "⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻ ⸻";
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      color: var(--govt-gold);
+      opacity: 0.15;
+      font-size: 1.1rem;
+      letter-spacing: 8px;
+    }
+
+    .memorandum-hero h1 {
+      font-family: 'Special Elite', cursive;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .memorandum-hero h1 em {
+      color: var(--govt-gold);
+      font-style: normal;
+      border-bottom: 2px dashed var(--govt-red);
+      padding-bottom: 0.2rem;
+    }
+
+    .memorandum-hero p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      max-width: 600px;
+      margin: 1rem auto 0;
+      font-family: 'Cutive Mono', monospace;
+      line-height: 1.8;
+    }
+
+    .memo-ref-number {
+      display: inline-block;
+      margin-top: 1.2rem;
+      padding: 0.4rem 2rem;
+      background: var(--govt-paper);
+      color: var(--govt-blue);
+      font-family: 'Special Elite', cursive;
+      border: 2px solid var(--govt-gold);
+      transform: rotate(-0.5deg);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+      font-size: 0.85rem;
+    }
+
+    /* ministry filter strip — like file dividers */
+    .ministry-strip {
+      background: var(--govt-paper);
+      padding: 1.2rem 2rem 0;
+      border-bottom: 2px solid var(--govt-border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem;
+      align-items: flex-end;
+    }
+
+    .file-divider {
+      background: var(--govt-paper);
+      border: 1px solid var(--govt-border);
+      border-bottom: none;
+      padding: 0.7rem 1.8rem;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.8rem;
+      color: var(--govt-ink);
+      cursor: pointer;
+      position: relative;
+      top: 2px;
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      box-shadow: 2px -2px 0 rgba(0,0,0,0.05);
+    }
+
+    .file-divider.active {
+      background: var(--govt-blue);
+      color: white;
+      border-color: var(--govt-gold);
+      border-bottom: 2px solid var(--govt-blue);
+      top: 0;
+      padding-bottom: 0.9rem;
+    }
+
+    .file-divider .stamp-small {
+      font-size: 0.5rem;
+      color: var(--govt-red);
+      background: rgba(255,255,255,0.9);
+      padding: 0.1rem 0.4rem;
+      margin-left: 0.3rem;
+      border-radius: 2px;
+      transform: rotate(-1deg);
+    }
+
+    .file-divider.active .stamp-small {
+      color: white;
+      background: var(--govt-red);
+    }
+
+    .new-petition-divider {
+      background: var(--govt-green);
+      color: white;
+      border-color: var(--govt-gold);
+      margin-left: auto;
+      top: 2px;
+    }
+
+    /* petition grid — serious file cards */
+    .petition-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+      gap: 2.5rem;
+      padding: 3rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* main card — grievance file */
+    .petition-file {
+      background: var(--govt-paper);
+      border: 1px solid var(--govt-border);
+      padding: 1.8rem;
+      position: relative;
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.1), 0 0 0 1px var(--govt-gold) inset;
+      transition: all 0.2s ease;
+    }
+
+    .petition-file:hover {
+      box-shadow: 12px 12px 0 rgba(0,0,0,0.15), 0 0 0 2px var(--govt-gold) inset;
+      transform: translateY(-3px);
+    }
+
+    /* red string / paperclip */
+    .paperclip {
+      position: absolute;
+      top: 12px;
+      left: 20px;
+      width: 24px;
+      height: 34px;
+      border: 3px solid var(--govt-gold);
+      border-radius: 50% 50% 0 0;
+      transform: rotate(12deg);
+      opacity: 0.6;
+      z-index: 5;
+    }
+
+    .paperclip::after {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: -3px;
+      width: 24px;
+      height: 3px;
+      background: var(--govt-gold);
+      transform: rotate(25deg);
+      border-radius: 2px;
+    }
+
+    /* file header */
+    .file-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 2px dashed var(--govt-border);
+    }
+
+    .ashoka {
+      font-size: 1.6rem;
+      filter: drop-shadow(2px 2px 0 var(--govt-gold));
+    }
+
+    .dept-code {
+      font-family: 'Cutive Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--govt-red);
+      background: rgba(139,0,0,0.08);
+      padding: 0.2rem 0.6rem;
+      border: 1px dotted var(--govt-red);
+      letter-spacing: 0.5px;
+      margin-left: auto;
+    }
+
+    /* petition unique id */
+    .petition-id {
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: var(--govt-blue);
+      background: rgba(0,51,102,0.05);
+      padding: 0.2rem 0.8rem;
+      border-left: 3px solid var(--govt-red);
+      margin-bottom: 0.8rem;
+    }
+
+    .petition-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--govt-ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .location-row {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #5a4a3a;
+      border-bottom: 1px solid var(--coffee-dark);
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .description {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      background: rgba(255,255,240,0.5);
+      padding: 0.8rem;
+      border-left: 3px solid var(--govt-gold);
+      margin: 0.8rem 0;
+      color: #2b3b4a;
+    }
+
+    .overdue-stamp {
+      display: inline-block;
+      background: var(--govt-stamp-red);
+      color: white;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      padding: 0.2rem 1rem;
+      border: 2px solid var(--govt-gold);
+      transform: rotate(-1deg);
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .overdue-stamp span {
+      background: white;
+      color: var(--govt-stamp-red);
+      padding: 0.1rem 0.5rem;
+      margin-left: 0.4rem;
+    }
+
+    /* signature progress */
+    .signature-progress {
+      margin: 1rem 0;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      margin-bottom: 0.3rem;
+      font-family: 'Special Elite', cursive;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(0,0,0,0.1);
+      border: 1px solid var(--govt-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: repeating-linear-gradient(45deg, var(--govt-blue), var(--govt-red) 80%);
+      width: 0%;
+      transition: width 0.4s;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: -2px; bottom: -2px;
+      width: 10px;
+      background: inherit;
+      filter: blur(3px);
+      clip-path: polygon(0 0, 100% 30%, 100% 70%, 0 100%);
+    }
+
+    .signature-numbers {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      margin-top: 0.3rem;
+      font-family: 'Cutive Mono', monospace;
+    }
+
+    .target-note {
+      color: var(--govt-green);
+    }
+
+    /* file footer with action */
+    .file-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--govt-border);
+    }
+
+    .rubber-stamp {
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      padding: 0.3rem 1.2rem;
+      border: 3px double;
+      transform: rotate(-2deg);
+      color: var(--govt-stamp-blue);
+      border-color: var(--govt-stamp-blue);
+      background: rgba(30,58,95,0.05);
+    }
+
+    .rubber-stamp.urgent {
+      color: var(--govt-stamp-red);
+      border-color: var(--govt-stamp-red);
+    }
+
+    .sign-button {
+      background: var(--govt-blue);
+      border: 2px solid var(--govt-gold);
+      color: white;
+      padding: 0.5rem 1.8rem;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+      letter-spacing: 1px;
+    }
+
+    .sign-button:hover {
+      background: var(--govt-red);
+      transform: translateY(-2px);
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.2);
+    }
+
+    .sign-button:active {
+      transform: translateY(0);
+    }
+
+    .stain-mark {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      width: 60px; height: 30px;
+      background: var(--coffee-dark);
+      filter: blur(10px);
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    /* stats section — ministry report */
+    .stats-ministry {
+      background: linear-gradient(135deg, var(--govt-blue) 0%, #1a4466 100%);
+      padding: 3rem;
+      border-top: 4px solid var(--govt-gold);
+      border-bottom: 4px solid var(--govt-gold);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 2rem auto;
+    }
+
+    .stat-file {
+      background: var(--govt-paper);
+      padding: 1.8rem 1rem;
+      border: 1px solid var(--govt-border);
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+      text-align: center;
+      transform: rotate(-0.3deg);
+    }
+
+    .stat-number {
+      font-family: 'Special Elite', cursive;
+      font-size: 2.2rem;
+      color: var(--govt-red);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--govt-blue);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* overlay forms — serious and official */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,51,102,0.9);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .official-sheet {
+      background: var(--govt-paper);
+      border: 4px solid var(--govt-gold);
+      padding: 2rem;
+      max-width: 520px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 12px 12px 0 rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .sheet-header {
+      font-family: 'Special Elite', cursive;
+      color: var(--govt-red);
+      border-bottom: 2px dashed var(--govt-border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .field-row {
+      margin-bottom: 1rem;
+    }
+
+    .field-row label {
+      display: block;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.7rem;
+      color: var(--govt-blue);
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .field-row input, .field-row textarea, .field-row select {
+      width: 100%;
+      background: white;
+      border: 2px solid var(--govt-border);
+      padding: 0.6rem 0.8rem;
+      font-family: 'Cutive Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    .field-row input:focus, .field-row textarea:focus {
+      border-color: var(--govt-gold);
+      outline: none;
+    }
+
+    .primary-btn {
+      background: var(--govt-green);
+      border: 2px solid var(--govt-gold);
+      color: white;
+      padding: 0.8rem;
+      width: 100%;
+      font-family: 'Special Elite', cursive;
+      font-size: 0.9rem;
+      cursor: pointer;
+      letter-spacing: 1px;
+      margin-top: 0.5rem;
+    }
+
+    .primary-btn:hover {
+      background: #1e5a24;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem; right: 1.2rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--govt-border);
+    }
+
+    footer {
+      background: var(--govt-blue);
+      padding: 1.5rem 3rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.7rem;
+      border-top: 4px solid var(--govt-gold);
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Cutive Mono', monospace;
+    }
+
+    footer a {
+      color: var(--govt-gold);
+      text-decoration: none;
+      border: 1px dashed var(--govt-gold);
+      padding: 0.3rem 1rem;
+    }
+
+    .toast-message {
+      position: fixed;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      background: var(--govt-blue);
+      color: var(--govt-gold);
+      border: 3px double var(--govt-gold);
+      padding: 0.7rem 2rem;
+      font-family: 'Special Elite', cursive;
+      z-index: 3000;
+      box-shadow: 6px 6px 0 black;
+    }
+  </style>
+</head>
+<body>
+  <header class="govt-header">
+    <div class="header-brand">Civic<span>Pulse</span></div>
+    <div class="header-links"><a href="/">← HOME</a></div>
+  </header>
+
+  <section class="memorandum-hero">
+    <h1>PETITION <em>REGISTER</em> · प्रार्थना पंजी</h1>
+    <p>OFFICE MEMORANDUM NO. CP/PET/2025-26 · PETITIONS RECEIVED UNDER RIGHT TO PUBLIC GRIEVANCE REDRESSAL ACT</p>
+    <div class="memo-ref-number">CURRENT AS ON 27 FEB 2026 · 11:45 HRS</div>
+  </section>
+
+  <div class="ministry-strip">
+    <button class="file-divider active" onclick="filterPetitions('all', this)">ALL FILES <span class="stamp-small">TOTAL 08</span></button>
+    <button class="file-divider" onclick="filterPetitions('urgent', this)">URGENT <span class="stamp-small">OVERDUE >10D</span></button>
+    <button class="file-divider" onclick="filterPetitions('active', this)">ACTIVE PETITIONS</button>
+    <button class="file-divider new-petition-divider" onclick="openNewPetition()">+ FILE NEW PETITION</button>
+  </div>
+
+  <div class="petition-grid" id="petitionGrid"></div>
+
+  <div class="stats-ministry">
+    <div class="stat-file"><div class="stat-number" id="statTotal">08</div><div class="stat-label">TOTAL PETITIONS</div></div>
+    <div class="stat-file"><div class="stat-number" id="statSignatures">1,247</div><div class="stat-label">COLLECTIVE SIGNATURES</div></div>
+    <div class="stat-file"><div class="stat-number" id="statUrgent">03</div><div class="stat-label">URGENT FILES</div></div>
+    <div class="stat-file"><div class="stat-number" id="statResolved">02</div><div class="stat-label">RESOLVED THIS MONTH</div></div>
+  </div>
+
+  <footer>
+    <p>© 2026 · भारत सरकार · GOVERNMENT OF INDIA · CIVIC PULSE · PETITION WING</p>
+    <a href="#">← OFFICE CIRCULAR</a>
+  </footer>
+
+  <!-- NEW PETITION OVERLAY -->
+  <div class="overlay" id="newPetitionOverlay" onclick="if(event.target===this) closeOverlay('newPetitionOverlay')">
+    <div class="official-sheet">
+      <span class="close-btn" onclick="closeOverlay('newPetitionOverlay')">✕</span>
+      <h3 class="sheet-header">OFFICE MEMORANDUM · NEW PETITION</h3>
+      <div class="field-row"><label>PETITION TITLE</label><input id="petTitle" placeholder="e.g. Broken sewer line, Grant Road"></div>
+      <div class="field-row"><label>CITY / JURISDICTION</label><input id="petCity" placeholder="Mumbai · Grant Road"></div>
+      <div class="field-row"><label>RESPONSIBLE DEPARTMENT</label>
+        <select id="petDept">
+          <option>Roads & Highways Dept</option>
+          <option>Storm Water Drain Dept</option>
+          <option>Solid Waste Management</option>
+          <option>Municipal Electrical Dept</option>
+          <option>Water Supply Dept</option>
+        </select>
+      </div>
+      <div class="field-row"><label>DESCRIPTION OF GRIEVANCE</label><textarea id="petDesc" rows="3" placeholder="Provide details ..."></textarea></div>
+      <div class="field-row"><label>DAYS OVERDUE (since deadline)</label><input type="number" id="petDays" min="1" value="5"></div>
+      <div class="field-row"><label>YOUR NAME (for record)</label><input id="petName" placeholder="Shri / Smt ..."></div>
+      <button class="primary-btn" onclick="submitNewPetition()">SUBMIT TO REGISTER</button>
+    </div>
+  </div>
+
+  <!-- SIGN OVERLAY -->
+  <div class="overlay" id="signOverlay" onclick="if(event.target===this) closeOverlay('signOverlay')">
+    <div class="official-sheet">
+      <span class="close-btn" onclick="closeOverlay('signOverlay')">✕</span>
+      <h3 class="sheet-header">SIGN PETITION · समर्थन</h3>
+      <div id="signMeta" style="font-size:0.8rem; background: #e8d9c0; padding:0.5rem; margin-bottom:1rem; border-left:4px solid var(--govt-red);"></div>
+      <div class="field-row"><label>YOUR NAME</label><input id="signName" placeholder="Enter full name"></div>
+      <div class="field-row"><label>MOBILE (optional)</label><input id="signPhone" placeholder="+91"></div>
+      <button class="primary-btn" onclick="doSign()">ADD SIGNATURE</button>
+    </div>
+  </div>
+
+  <script>
+    const petitions = [
+      { id: 'CP/PET/2026/001', title: 'Pothole cluster — Linking Road', city: 'Mumbai · Bandra', dept: 'Roads & Highways', desc: '7 large potholes, 3 months unresolved. Two accidents last week.', days: 34, supporters: 287, target: 500, status: 'urgent' },
+      { id: 'CP/PET/2026/004', title: 'Streetlights non-functional — Shivaji Park', city: 'Mumbai · Dadar', dept: 'Electrical Dept', desc: '12 poles dark for 47 days. Women commuters unsafe.', days: 47, supporters: 412, target: 600, status: 'urgent' },
+      { id: 'CP/PET/2026/007', title: 'Open drain cover — Camp Road', city: 'Amravati', dept: 'Storm Water Drain', desc: 'Cover missing for 6 months, child fell last month.', days: 180, supporters: 156, target: 400, status: 'urgent' },
+      { id: 'CP/PET/2026/012', title: 'Garbage not collected — Bandra East', city: 'Mumbai', dept: 'Solid Waste', desc: 'No collection for 9 days, rodent problem.', days: 9, supporters: 78, target: 250, status: 'active' },
+      { id: 'CP/PET/2026/015', title: 'Broken footpath — FC Road', city: 'Pune', dept: 'Roads & Highways', desc: 'Pedestrians forced onto road, near miss with bus.', days: 12, supporters: 203, target: 350, status: 'active' },
+      { id: 'CP/PET/2026/021', title: 'Water pipe burst — Kurla West', city: 'Mumbai', dept: 'Water Supply', desc: 'Pipe burst 5 days ago, no water supply.', days: 5, supporters: 143, target: 300, status: 'active' },
+      { id: 'CP/PET/2026/022', title: 'Drainage overflow — Grant Road', city: 'Mumbai', dept: 'Storm Water Drain', desc: 'Sewage overflowing for 8 days, health hazard.', days: 8, supporters: 94, target: 280, status: 'active' },
+      { id: 'CP/PET/2026/025', title: 'Tree branches — dangerously low', city: 'Amravati', dept: 'Garden Dept', desc: 'Branches hanging since 2 months, risk to pedestrians.', days: 61, supporters: 44, target: 200, status: 'urgent' }
+    ];
+
+    let currentFilter = 'all';
+    let signingId = null;
+
+    function renderPetitions(filtered) {
+      const grid = document.getElementById('petitionGrid');
+      grid.innerHTML = '';
+      filtered.forEach(p => {
+        const pct = Math.min(100, Math.round(p.supporters / p.target * 100));
+        const card = document.createElement('div');
+        card.className = 'petition-file';
+        card.innerHTML = `
+          <div class="paperclip"></div>
+          <div class="file-header">
+            <span class="ashoka">🛡️</span>
+            <span class="dept-code">${p.dept}</span>
+          </div>
+          <div class="petition-id">${p.id} · दाखिल</div>
+          <h3 class="petition-title">${p.title}</h3>
+          <div class="location-row"><span>📍 ${p.city}</span> <span>⚙️ ${p.dept}</span></div>
+          <p class="description">${p.desc}</p>
+          <div class="overdue-stamp">OVERDUE <span>${p.days} DAYS</span></div>
+          <div class="signature-progress">
+            <div class="progress-header"><span>SIGNATURES COLLECTED</span> <span>${p.supporters}/${p.target}</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="signature-numbers"><span>✒️ ${p.supporters.toLocaleString()}</span> <span class="target-note">target ${p.target}</span></div>
+          </div>
+          <div class="file-footer">
+            <div class="rubber-stamp ${p.days > 10 ? 'urgent' : ''}">${p.days > 10 ? 'URGENT' : 'ACTIVE'}</div>
+            <button class="sign-button" onclick="openSignOverlay('${p.id}')">🖋️ SIGN</button>
+          </div>
+          <div class="stain-mark"></div>
+        `;
+        grid.appendChild(card);
+      });
+      updateStats();
+    }
+
+    function filterPetitions(filter, btn) {
+      document.querySelectorAll('.file-divider').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = filter;
+      let filtered = petitions;
+      if (filter === 'urgent') filtered = petitions.filter(p => p.days > 10);
+      else if (filter === 'active') filtered = petitions.filter(p => p.days <= 10);
+      renderPetitions(filtered);
+    }
+
+    function openNewPetition() { document.getElementById('newPetitionOverlay').classList.add('open'); }
+    function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
+
+    function submitNewPetition() {
+      const title = document.getElementById('petTitle').value.trim();
+      const city = document.getElementById('petCity').value.trim();
+      const dept = document.getElementById('petDept').value;
+      const desc = document.getElementById('petDesc').value.trim();
+      const days = parseInt(document.getElementById('petDays').value) || 1;
+      const name = document.getElementById('petName').value.trim();
+      if (!title || !city || !desc || !name) { alert('Please fill all required fields.'); return; }
+      const newPet = {
+        id: 'CP/PET/2026/' + Math.floor(100 + Math.random()*900),
+        title, city, dept, desc, days, supporters: 1, target: 250, status: days > 10 ? 'urgent' : 'active'
+      };
+      petitions.unshift(newPet);
+      closeOverlay('newPetitionOverlay');
+      renderPetitions(petitions);
+      showToast('Petition registered. Office Memorandum issued.');
+    }
+
+    function openSignOverlay(petId) {
+      signingId = petId;
+      const p = petitions.find(x => x.id === petId);
+      if (!p) return;
+      document.getElementById('signMeta').innerHTML = `<strong>${p.title}</strong><br>Current signatures: ${p.supporters} · Target: ${p.target}`;
+      document.getElementById('signOverlay').classList.add('open');
+    }
+
+    async function doSign() {
+      const name = document.getElementById('signName').value.trim();
+      const phone = document.getElementById('signPhone').value.trim();
+      if (!name) { alert('Name required'); return; }
+      // Optimistic local update
+      const pet = petitions.find(x => x.id === signingId);
+      if (pet) pet.supporters++;
+      closeOverlay('signOverlay');
+      renderPetitions(petitions);
+      showToast('Signature added. Thank you!');
+      // Persist to backend (best-effort — demo petitions use local IDs so may 404)
+      try {
+        const numId = parseInt(signingId);
+        if(!isNaN(numId)){
+          await fetch('/api/petitions/'+numId+'/sign', {
+            method:'POST', credentials:'include',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({name, phone})
+          });
+        }
+      } catch(e) { /* backend optional for demo petitions */ }
+    }
+
+    function updateStats() {
+      document.getElementById('statTotal').innerText = petitions.length;
+      const totalSig = petitions.reduce((acc, p) => acc + p.supporters, 0);
+      document.getElementById('statSignatures').innerText = totalSig.toLocaleString();
+      document.getElementById('statUrgent').innerText = petitions.filter(p => p.days > 10).length;
+    }
+
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.className = 'toast-message';
+      t.innerText = msg;
+      document.body.appendChild(t);
+      setTimeout(() => { t.remove(); }, 2000);
+    }
+
+    // initial
+    renderPetitions(petitions);
+    window.filterPetitions = filterPetitions;
+    window.openNewPetition = openNewPetition;
+    window.closeOverlay = closeOverlay;
+    window.submitNewPetition = submitNewPetition;
+    window.openSignOverlay = openSignOverlay;
+    window.doSign = doSign;
+  </script>
+<script src="/static/js/api.js"></script>
+</body>
+</html>

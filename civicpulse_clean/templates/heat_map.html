@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>महानगर निगम · नागरिक ऊष्मा मानचित्र | Municipal Heat Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f0f2f5;
+      color: #1e293b;
+      padding: 2rem;
+      line-height: 1.5;
+    }
+    
+    /* Government UI - clean, structured, authoritative */
+    .gov-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #d0d7de;
+      overflow: hidden;
+    }
+
+    /* Official header - like government gazette */
+    .gov-header {
+      background: #0B3D91;
+      padding: 1.25rem 2rem;
+      border-bottom: 4px solid #f4a261;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .gov-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .gov-emblem {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .gov-title h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+    .gov-title h1 span {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      display: block;
+      margin-top: 0.2rem;
+      letter-spacing: 0.3px;
+    }
+    .gov-id {
+      background: rgba(255,255,255,0.12);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      color: white;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Navigation tabs - like ministry sections */
+    .gov-tabs {
+      display: flex;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+      padding: 0 1.5rem;
+      gap: 2rem;
+    }
+    .gov-tab {
+      padding: 0.9rem 0.25rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #64748b;
+      border-bottom: 3px solid transparent;
+      cursor: default;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .gov-tab.active {
+      color: #0B3D91;
+      border-bottom: 3px solid #0B3D91;
+      font-weight: 600;
+    }
+
+    /* Filter bar - like control panel */
+    .gov-filters {
+      background: white;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+    }
+    .filter-section {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #475569;
+      letter-spacing: 0.3px;
+    }
+    .filter-select {
+      background: white;
+      border: 1px solid #cbd5e1;
+      padding: 0.4rem 2rem 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2347566b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.3rem center;
+      background-size: 1rem;
+    }
+    .filter-badge {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    /* Legend - official color key */
+    .gov-legend {
+      display: flex;
+      gap: 2rem;
+      padding: 0.75rem 2rem;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .color-red { background: #dc2626; }
+    .color-blue { background: #2563eb; }
+    .color-brown { background: #9a3412; }
+    .color-orange { background: #ea580c; }
+    .legend-text {
+      font-weight: 500;
+      color: #334155;
+    }
+    .legend-stats {
+      color: #64748b;
+      margin-left: 0.2rem;
+    }
+
+    /* Main grid area - like municipal ward dashboard */
+    .gov-main {
+      padding: 2rem;
+      background: white;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .section-header h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #0B3D91;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .update-time {
+      font-size: 0.7rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    /* Ward grid - clean, tabular, government style */
+    .ward-table {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .ward-table-header {
+      display: grid;
+      grid-template-columns: 100px 120px repeat(4, 1fr) 100px;
+      background: #f8fafc;
+      border-bottom: 2px solid #d0d7de;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #475569;
+      padding: 0.75rem 1rem;
+    }
+    .ward-row {
+      display: grid;
+      grid-template-columns: 100px 120px repeat(4, 1fr) 100px;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid #e9edf2;
+      font-size: 0.85rem;
+      align-items: center;
+      transition: background 0.1s;
+    }
+    .ward-row:hover {
+      background: #f1f5f9;
+    }
+    .ward-row.critical {
+      background: #fee2e2;
+      border-left: 4px solid #dc2626;
+    }
+    .ward-code {
+      font-weight: 600;
+      color: #0B3D91;
+      font-family: 'Roboto Mono', monospace;
+    }
+    .ward-name {
+      color: #1e293b;
+    }
+    .metric-cell {
+      text-align: right;
+      font-family: 'Roboto Mono', monospace;
+      font-weight: 500;
+    }
+    .metric-bar {
+      width: 60px;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+    .status-badge {
+      background: #f1f5f9;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-align: center;
+    }
+    .badge-red {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    /* Department performance cards */
+    .dept-dashboard {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .dept-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .dept-card h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #475569;
+      margin-bottom: 0.8rem;
+    }
+    .dept-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+    .dept-label {
+      font-size: 0.7rem;
+      color: #64748b;
+    }
+    .dept-value {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .progress-track {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      margin: 0.5rem 0;
+    }
+    .progress-fill {
+      height: 6px;
+      border-radius: 3px;
+    }
+
+    /* Footer - official */
+    .gov-footer {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #64748b;
+    }
+    .footer-ref {
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    /* responsive */
+    @media (max-width: 1200px) {
+      .ward-table-header, .ward-row {
+        grid-template-columns: 80px 100px repeat(4, 1fr) 80px;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div style="position:fixed;top:1rem;left:1rem;z-index:9999">
+  <a href="/" style="display:inline-flex;align-items:center;gap:.5rem;background:#0B3D91;color:white;padding:.5rem 1.1rem;border-radius:8px;font-size:.8rem;font-weight:600;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.25)">← Home</a>
+</div>
+
+  <div class="gov-container">
+    <!-- Header with government identity -->
+    <div class="gov-header">
+      <div class="gov-header-left">
+        <div class="gov-emblem">🛡️</div>
+        <div class="gov-title">
+          <h1>महानगर निगम · नागरिक ऊष्मा मानचित्र</h1>
+          <h1><span>Municipal Corporation · Civic Heat Map (Integrated Command Centre)</span></h1>
+        </div>
+      </div>
+      <div class="gov-id">
+        MC-2026-027 · वार्ड क्रमांक 42
+      </div>
+    </div>
+
+    <!-- Ministry-style tabs -->
+    <div class="gov-tabs">
+      <div class="gov-tab active">समस्या घनत्व / Problem Density</div>
+      <div class="gov-tab">विभागीय कार्यनिष्पादन / Dept Performance</div>
+      <div class="gov-tab">याचिका इंजन / Petition Engine</div>
+      <div class="gov-tab">सार्वजनिक चौक / Public Square</div>
+    </div>
+
+    <!-- Filter controls - official -->
+    <div class="gov-filters">
+      <div class="filter-section">
+        <span class="filter-label">समयावधि / Period:</span>
+        <select class="filter-select">
+          <option>पिछले 7 दिन (Last 7 days)</option>
+          <option>पिछले 30 दिन (Last 30 days)</option>
+          <option>सभी रिकॉर्ड (All time)</option>
+        </select>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">विभाग / Dept:</span>
+        <select class="filter-select">
+          <option>सभी विभाग (All departments)</option>
+          <option>BMC (ठोस अपशिष्ट)</option>
+          <option>PWD (सड़क एवं पुल)</option>
+          <option>जल प्रदाय (Water Board)</option>
+        </select>
+      </div>
+      <div class="filter-section">
+        <span class="filter-label">समस्या प्रकार / Issue:</span>
+        <div style="display: flex; gap: 0.5rem;">
+          <span class="filter-badge">संरचनात्मक</span>
+          <span class="filter-badge">जल निकासी</span>
+          <span class="filter-badge">कचरा</span>
+          <span class="filter-badge">याचिका</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Official legend -->
+    <div class="gov-legend">
+      <div class="legend-item">
+        <span class="legend-color color-red"></span>
+        <span class="legend-text">संरचनात्मक / Structural</span>
+        <span class="legend-stats">(47 मुलुंड)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color color-blue"></span>
+        <span class="legend-text">जल निकासी / Drainage</span>
+        <span class="legend-stats">(42 भांडुप)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color color-brown"></span>
+        <span class="legend-text">कचरा / Garbage</span>
+        <span class="legend-stats">(58 अंधेरी)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color color-orange"></span>
+        <span class="legend-text">याचिका / Petitions</span>
+        <span class="legend-stats">(6 ठाणे)</span>
+      </div>
+    </div>
+
+    <!-- Main data table - like municipal spreadsheet -->
+    <div class="gov-main">
+      <div class="section-header">
+        <h2>वार्ड-वार समस्या सारणी · Ward-wise Issue Register</h2>
+        <span class="update-time">अद्यतन: 27 फरवरी 2026, 14:30</span>
+      </div>
+
+      <div class="ward-table">
+        <!-- Header -->
+        <div class="ward-table-header">
+          <div>वार्ड कोड</div>
+          <div>वार्ड नाम</div>
+          <div style="text-align: right;">संरचनात्मक</div>
+          <div style="text-align: right;">जल निकासी</div>
+          <div style="text-align: right;">कचरा</div>
+          <div style="text-align: right;">याचिका</div>
+          <div style="text-align: center;">स्थिति</div>
+        </div>
+
+        <!-- Data rows - official, clean, critical highlighted -->
+        <div class="ward-row critical">
+          <div class="ward-code">W42</div>
+          <div class="ward-name">मुलुंड (Mulund)</div>
+          <div class="metric-cell">47 <span class="metric-bar"><span class="bar-fill" style="display:block; width:67%; background:#dc2626;"></span></span></div>
+          <div class="metric-cell">23 <span class="metric-bar"><span class="bar-fill" style="display:block; width:46%; background:#2563eb;"></span></span></div>
+          <div class="metric-cell">31 <span class="metric-bar"><span class="bar-fill" style="display:block; width:52%; background:#9a3412;"></span></span></div>
+          <div class="metric-cell">3</div>
+          <div style="text-align: center;"><span class="status-badge badge-red">CRITICAL</span></div>
+        </div>
+
+        <div class="ward-row">
+          <div class="ward-code">W5</div>
+          <div class="ward-name">अंधेरी (Andheri)</div>
+          <div class="metric-cell">38 <span class="metric-bar"><span class="bar-fill" style="display:block; width:54%; background:#dc2626;"></span></span></div>
+          <div class="metric-cell">29 <span class="metric-bar"><span class="bar-fill" style="display:block; width:58%; background:#2563eb;"></span></span></div>
+          <div class="metric-cell">58 <span class="metric-bar"><span class="bar-fill" style="display:block; width:97%; background:#9a3412;"></span></span></div>
+          <div class="metric-cell">5</div>
+          <div style="text-align: center;"><span class="status-badge badge-red">HIGH</span></div>
+        </div>
+
+        <div class="ward-row">
+          <div class="ward-code">W7</div>
+          <div class="ward-name">मालाड (Malad)</div>
+          <div class="metric-cell">45 <span class="metric-bar"><span class="bar-fill" style="display:block; width:64%; background:#dc2626;"></span></span></div>
+          <div class="metric-cell">22 <span class="metric-bar"><span class="bar-fill" style="display:block; width:44%; background:#2563eb;"></span></span></div>
+          <div class="metric-cell">39 <span class="metric-bar"><span class="bar-fill" style="display:block; width:65%; background:#9a3412;"></span></span></div>
+          <div class="metric-cell">4</div>
+          <div style="text-align: center;"><span class="status-badge badge-red">HIGH</span></div>
+        </div>
+
+        <div class="ward-row">
+          <div class="ward-code">W45</div>
+          <div class="ward-name">ठाणे (Thane)</div>
+          <div class="metric-cell">52 <span class="metric-bar"><span class="bar-fill" style="display:block; width:74%; background:#dc2626;"></span></span></div>
+          <div class="metric-cell">33 <span class="metric-bar"><span class="bar-fill" style="display:block; width:66%; background:#2563eb;"></span></span></div>
+          <div class="metric-cell">28 <span class="metric-bar"><span class="bar-fill" style="display:block; width:47%; background:#9a3412;"></span></span></div>
+          <div class="metric-cell">6</div>
+          <div style="text-align: center;"><span class="status-badge badge-red">CRITICAL</span></div>
+        </div>
+
+        <div class="ward-row">
+          <div class="ward-code">W41</div>
+          <div class="ward-name">भांडुप (Bhandup)</div>
+          <div class="metric-cell">18</div>
+          <div class="metric-cell">42 <span class="metric-bar"><span class="bar-fill" style="display:block; width:84%; background:#2563eb;"></span></span></div>
+          <div class="metric-cell">15</div>
+          <div class="metric-cell">2</div>
+          <div style="text-align: center;"><span class="status-badge">निगरानी</span></div>
+        </div>
+
+        <div class="ward-row">
+          <div class="ward-code">W40</div>
+          <div class="ward-name">कुर्ला (Kurla)</div>
+          <div class="metric-cell">26</div>
+          <div class="metric-cell">37 <span class="metric-bar"><span class="bar-fill" style="display:block; width:74%; background:#2563eb;"></span></span></div>
+          <div class="metric-cell">44 <span class="metric-bar"><span class="bar-fill" style="display:block; width:73%; background:#9a3412;"></span></span></div>
+          <div class="metric-cell">4</div>
+          <div style="text-align: center;"><span class="status-badge">मध्यम</span></div>
+        </div>
+      </div>
+
+      <!-- Department performance - official metrics -->
+      <div class="dept-dashboard">
+        <div class="dept-card">
+          <h3>🏛️ BMC (ठोस अपशिष्ट)</h3>
+          <div class="dept-metric">
+            <span class="dept-label">निस्तारण दर</span>
+            <span class="dept-value">67%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:67%; background:#2563eb;"></div></div>
+          <div class="dept-metric">
+            <span class="dept-label">लंबित</span>
+            <span class="dept-value">102</span>
+          </div>
+          <div class="dept-metric">
+            <span class="dept-label">औसत समय</span>
+            <span class="dept-value">8.2 दिन</span>
+          </div>
+        </div>
+
+        <div class="dept-card">
+          <h3>🛣️ PWD (सड़क/पुल)</h3>
+          <div class="dept-metric">
+            <span class="dept-label">निस्तारण दर</span>
+            <span class="dept-value">41%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:41%; background:#dc2626;"></div></div>
+          <div class="dept-metric">
+            <span class="dept-label">लंबित</span>
+            <span class="dept-value">76</span>
+          </div>
+          <div class="dept-metric">
+            <span class="dept-label">औसत समय</span>
+            <span class="dept-value">12.5 दिन</span>
+          </div>
+        </div>
+
+        <div class="dept-card">
+          <h3>💧 जल प्रदाय</h3>
+          <div class="dept-metric">
+            <span class="dept-label">निस्तारण दर</span>
+            <span class="dept-value">82%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:82%; background:#16a34a;"></div></div>
+          <div class="dept-metric">
+            <span class="dept-label">लंबित</span>
+            <span class="dept-value">44</span>
+          </div>
+          <div class="dept-metric">
+            <span class="dept-label">औसत समय</span>
+            <span class="dept-value">6.1 दिन</span>
+          </div>
+        </div>
+
+        <div class="dept-card">
+          <h3>📢 याचिका प्रकोष्ठ</h3>
+          <div class="dept-metric">
+            <span class="dept-label">सक्रिय याचिका</span>
+            <span class="dept-value">23</span>
+          </div>
+          <div class="dept-metric">
+            <span class="dept-label">विभागीय चेतावनी</span>
+            <span class="dept-value" style="color:#dc2626;">8</span>
+          </div>
+          <div class="dept-metric">
+            <span class="dept-label">समर्थक</span>
+            <span class="dept-value">1,247</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer with official reference -->
+    <div class="gov-footer">
+      <div>महाराष्ट्र शासन · नागरिक उपक्रम · ऊष्मा मानचित्र v2.0</div>
+      <div class="footer-ref">अंतरिम रिपोर्ट · गोपनीयता पूर्वक · आईटीएम संदर्भ: MC/HEAT/2026/027</div>
+    </div>
+  </div>
+
+  <!-- Simple note about Mulund -->
+  <div style="max-width: 1400px; margin: 1rem auto 0; padding: 0 1rem; color: #475569; font-size: 0.8rem;">
+    ⚠️ <strong>टिप्पणी:</strong> मुलुंड (W42) में संरचनात्मक समस्या 47, जो राज्य औसत 21 से अधिक। तत्काल निरीक्षण हेतु चिन्हित।
+    <br>⚠️ <strong>Note:</strong> Mulund (W42) shows 47 structural issues (state avg 21). Flagged for immediate inspection.
+  </div>
+<script src="/static/js/api.js"></script>
+</body>
+</html>
